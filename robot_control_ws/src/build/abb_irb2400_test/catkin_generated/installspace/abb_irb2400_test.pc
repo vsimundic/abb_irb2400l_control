@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: abb_irb2400_test
+Description: Description of abb_irb2400_test
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

@@ -1,0 +1,34 @@
+{
+    "configurations": [
+        {
+            "browse": {
+                "databaseFilename": "",
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "includePath": [
+                "/home/valentin/FAKS/HDR/human_tracker/devel/include/**",
+                "/home/valentin/FAKS/HDR/openni_kinect/devel/include/**",
+                "/opt/ros/melodic/include/**",
+                "/home/valentin/FAKS/HDR/human_tracker/src/HaarAda/include/**",
+                "/home/valentin/FAKS/HDR/human_tracker/src/HaarDispAda/include/**",
+                "/home/valentin/FAKS/HDR/human_tracker/src/HaarSvm/include/**",
+                "/home/valentin/FAKS/HDR/human_tracker/src/HogSvm/include/**",
+                "/home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/src/abb_irb2400_test/include/**",
+                "/home/valentin/FAKS/HDR/human_tracker/src/bbox_info/include/**",
+                "/home/valentin/FAKS/HDR/human_tracker/src/consistency/include/**",
+                "/home/valentin/FAKS/HDR/human_tracker/src/dataset_testing/include/**",
+                "/home/valentin/FAKS/HDR/human_tracker/src/object_tracking/include/**",
+                "/home/valentin/FAKS/HDR/openni_kinect/src/openni_camera/openni_camera/include/**",
+                "/home/valentin/FAKS/HDR/human_tracker/src/visualize_bbox/include/**",
+                "/usr/include/**"
+            ],
+            "name": "ROS",
+            "intelliSenseMode": "gcc-x64",
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++14",
+            "configurationProvider": "ms-vscode.cmake-tools"
+        }
+    ],
+    "version": 4
+}

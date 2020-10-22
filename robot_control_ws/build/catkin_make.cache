@@ -1,0 +1,2 @@
+abb_irb2400_test
+-DCATKIN_DEVEL_PREFIX=/home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/devel -DCMAKE_INSTALL_PREFIX=/home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/install -G Unix Makefiles

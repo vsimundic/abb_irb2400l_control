@@ -1,0 +1,2 @@
+abb:abb_driver:abb_irb2400_moveit_config:abb_irb2400_moveit_plugins:abb_irb2400_support:abb_resources
+-DCATKIN_DEVEL_PREFIX=/home/valentin/FAKS/HDR/robot_workspaces/catkin_abb_ws/devel -DCMAKE_INSTALL_PREFIX=/home/valentin/FAKS/HDR/robot_workspaces/catkin_abb_ws/install -G Unix Makefiles

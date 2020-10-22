@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "browse": {
+                "databaseFilename": "",
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "/opt/ros/kinetic/include",
+                    "/home/korisnik/catkin_abb_ws/src/abb/abb_driver/include",
+                    "/usr/include"
+                ]
+            },
+            "includePath": [
+                "/opt/ros/kinetic/include",
+                "/home/korisnik/catkin_abb_ws/src/abb/abb_driver/include",
+                "/usr/include"
+            ],
+            "name": "Linux",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 3
+}

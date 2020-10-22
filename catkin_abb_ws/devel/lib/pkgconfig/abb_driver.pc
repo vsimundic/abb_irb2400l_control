@@ -1,0 +1,8 @@
+prefix=/home/valentin/FAKS/HDR/robot_workspaces/catkin_abb_ws/devel
+
+Name: abb_driver
+Description: Description of abb_driver
+Version: 1.3.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: industrial_robot_client

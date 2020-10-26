@@ -1,0 +1,38 @@
+<launch>
+    <!-- <include file="$(find abb_irb2400_moveit_config)/launch/moveit_planning_execution.launch">
+        <arg name="sim" value="true"/>
+    </include> -->
+    <arg name="robot_ipp" default="172.16.106.185" /> 
+
+
+    <include file="$(find timed_roslaunch)/timed_roslaunch.launch">
+        <arg name="time" value="10" />
+        <arg name="pkg" value="openni_launch" />
+        <arg name="file" value="openni.launch" />
+        <arg name="node_name" value="timed_roslaunch_openni" />
+    </include>
+
+    <include file="$(find timed_roslaunch)/timed_roslaunch.launch">
+        <arg name="time" value="1" />
+        <arg name="pkg" value="abb_irb2400_moveit_config" />
+        <arg name="file" value="moveit_planning_execution.launch" />
+        <arg name="value" value="sim:=false robot_ip:=$(arg robot_ipp)" />
+        <arg name="node_name" value="timed_roslaunch_moveitconfig" />
+    </include>
+
+    <include file="$(find timed_roslaunch)/timed_roslaunch.launch">
+        <arg name="time" value="25" />
+        <arg name="pkg" value="System_Launch" />
+        <arg name="file" value="run_kinect_node.launch" />
+        <arg name="node_name" value="timed_roslaunch_human_tracker" />
+    </include>
+    
+    <include file="$(find timed_roslaunch)/timed_roslaunch.launch">
+        <arg name="time" value="30" />
+        <arg name="pkg" value="abb_irb2400_test" />
+        <arg name="file" value="run_custom_test.launch" />
+        <arg name="node_name" value="timed_roslaunch_custom_trajectory" />
+    </include>
+
+
+</launch>

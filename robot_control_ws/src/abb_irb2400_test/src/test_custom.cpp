@@ -89,7 +89,7 @@ int main(int argc, char **argv)
     move_group.allowReplanning(true);
 
     //Create a timer for execution resetting
-    ros::Timer timer = node_handle.createTimer(ros::Duration(6.0), timerCallback);
+    ros::Timer timer = node_handle.createTimer(ros::Duration(3.0), timerCallback);
 
     // Setting a custom goal position
     geometry_msgs::Pose target_pose1;

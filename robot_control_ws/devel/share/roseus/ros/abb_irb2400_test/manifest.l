@@ -15,6 +15,7 @@
 (ros::load-ros-package "nav_msgs")
 (ros::load-ros-package "object_recognition_msgs")
 (ros::load-ros-package "octomap_msgs")
+(ros::load-ros-package "roi_msgs")
 (ros::load-ros-package "roscpp")
 (ros::load-ros-package "rosgraph_msgs")
 (ros::load-ros-package "rviz")

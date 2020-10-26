@@ -1,0 +1,3 @@
+<launch>
+    <node pkg="abb_irb2400_test" type="abb_irb2400_test_custom_node" name="test_custom" />
+</launch>

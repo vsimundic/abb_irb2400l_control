@@ -1,0 +1,25 @@
+<launch>
+
+    <!-- <arg name="node_start_delay" default="1.0" />  -->
+    <arg name="robot_ip" default="172.16.106.185" /> 
+
+
+    <include file="$(find abb_irb2400_moveit_config)/launch/moveit_planning_execution.launch">
+        <arg name="sim" value="false"/>
+        <arg name="robot_ip" value="$(arg robot_ip)"/>
+    </include>
+
+
+    <include file="$(find openni_launch)/launch/openni.launch"/>
+    
+
+    
+    <include file="$(find System_Launch)/launch/run_kinect_node.launch"/>
+    
+
+
+    <include file="$(find abb_irb2400_test)/launch/run_custom_test.launch"/>
+
+    <!-- <node pkg="abb_irb2400_test" type="test_custom_node" name="test_custom" args="sim:=false robot_ip=$(arg robot_ip)"> </node> -->
+
+</launch>

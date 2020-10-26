@@ -2,4 +2,4 @@
 source_root_dir = '/home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/src'
 whitelisted_packages = ''.split(';') if '' != '' else []
 blacklisted_packages = ''.split(';') if '' != '' else []
-underlay_workspaces = '/home/valentin/FAKS/HDR/robot_workspaces/catkin_abb_ws/devel;/home/valentin/FAKS/HDR/openni_kinect/devel;/opt/ros/melodic'.split(';') if '/home/valentin/FAKS/HDR/robot_workspaces/catkin_abb_ws/devel;/home/valentin/FAKS/HDR/openni_kinect/devel;/opt/ros/melodic' != '' else []
+underlay_workspaces = '/home/valentin/FAKS/HDR/robot_workspaces/catkin_abb_ws/devel;/home/valentin/FAKS/HDR/human_tracker/devel;/home/valentin/FAKS/HDR/openni_kinect/devel;/opt/ros/melodic'.split(';') if '/home/valentin/FAKS/HDR/robot_workspaces/catkin_abb_ws/devel;/home/valentin/FAKS/HDR/human_tracker/devel;/home/valentin/FAKS/HDR/openni_kinect/devel;/opt/ros/melodic' != '' else []

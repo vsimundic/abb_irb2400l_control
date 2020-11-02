@@ -176,6 +176,7 @@ abb_irb2400_test_random_node_EXTERNAL_OBJECTS =
 /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/devel/lib/abb_irb2400_test/abb_irb2400_test_random_node: /usr/lib/x86_64-linux-gnu/libpython2.7.so
 /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/devel/lib/abb_irb2400_test/abb_irb2400_test_random_node: /usr/lib/x86_64-linux-gnu/libboost_program_options.so
 /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/devel/lib/abb_irb2400_test/abb_irb2400_test_random_node: /usr/lib/x86_64-linux-gnu/libtinyxml2.so
+/home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/devel/lib/abb_irb2400_test/abb_irb2400_test_random_node: /home/valentin/FAKS/HDR/human_tracker/devel/lib/libroi_msgs.so
 /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/devel/lib/abb_irb2400_test/abb_irb2400_test_random_node: /opt/ros/melodic/lib/libroscpp.so
 /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/devel/lib/abb_irb2400_test/abb_irb2400_test_random_node: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
 /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/devel/lib/abb_irb2400_test/abb_irb2400_test_random_node: /opt/ros/melodic/lib/librosconsole.so

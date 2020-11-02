@@ -183,6 +183,21 @@ abb_irb2400_test_custom_node/fast:
 .PHONY : abb_irb2400_test_custom_node/fast
 
 # Convenience name for target.
+abb_irb2400_test/CMakeFiles/RobotControl_node.dir/rule:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f CMakeFiles/Makefile2 abb_irb2400_test/CMakeFiles/RobotControl_node.dir/rule
+.PHONY : abb_irb2400_test/CMakeFiles/RobotControl_node.dir/rule
+
+# Convenience name for target.
+RobotControl_node: abb_irb2400_test/CMakeFiles/RobotControl_node.dir/rule
+
+.PHONY : RobotControl_node
+
+# fast build rule for target.
+RobotControl_node/fast:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f abb_irb2400_test/CMakeFiles/RobotControl_node.dir/build.make abb_irb2400_test/CMakeFiles/RobotControl_node.dir/build
+.PHONY : RobotControl_node/fast
+
+# Convenience name for target.
 abb_irb2400_test/CMakeFiles/abb_irb2400_test_genpy.dir/rule:
 	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f CMakeFiles/Makefile2 abb_irb2400_test/CMakeFiles/abb_irb2400_test_genpy.dir/rule
 .PHONY : abb_irb2400_test/CMakeFiles/abb_irb2400_test_genpy.dir/rule
@@ -196,21 +211,6 @@ abb_irb2400_test_genpy: abb_irb2400_test/CMakeFiles/abb_irb2400_test_genpy.dir/r
 abb_irb2400_test_genpy/fast:
 	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f abb_irb2400_test/CMakeFiles/abb_irb2400_test_genpy.dir/build.make abb_irb2400_test/CMakeFiles/abb_irb2400_test_genpy.dir/build
 .PHONY : abb_irb2400_test_genpy/fast
-
-# Convenience name for target.
-abb_irb2400_test/CMakeFiles/abb_irb2400_test_generate_messages_py.dir/rule:
-	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f CMakeFiles/Makefile2 abb_irb2400_test/CMakeFiles/abb_irb2400_test_generate_messages_py.dir/rule
-.PHONY : abb_irb2400_test/CMakeFiles/abb_irb2400_test_generate_messages_py.dir/rule
-
-# Convenience name for target.
-abb_irb2400_test_generate_messages_py: abb_irb2400_test/CMakeFiles/abb_irb2400_test_generate_messages_py.dir/rule
-
-.PHONY : abb_irb2400_test_generate_messages_py
-
-# fast build rule for target.
-abb_irb2400_test_generate_messages_py/fast:
-	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f abb_irb2400_test/CMakeFiles/abb_irb2400_test_generate_messages_py.dir/build.make abb_irb2400_test/CMakeFiles/abb_irb2400_test_generate_messages_py.dir/build
-.PHONY : abb_irb2400_test_generate_messages_py/fast
 
 # Convenience name for target.
 abb_irb2400_test/CMakeFiles/abb_irb2400_test_gennodejs.dir/rule:
@@ -316,6 +316,81 @@ abb_irb2400_test_generate_messages_cpp: abb_irb2400_test/CMakeFiles/abb_irb2400_
 abb_irb2400_test_generate_messages_cpp/fast:
 	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f abb_irb2400_test/CMakeFiles/abb_irb2400_test_generate_messages_cpp.dir/build.make abb_irb2400_test/CMakeFiles/abb_irb2400_test_generate_messages_cpp.dir/build
 .PHONY : abb_irb2400_test_generate_messages_cpp/fast
+
+# Convenience name for target.
+abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_py.dir/rule:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f CMakeFiles/Makefile2 abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_py.dir/rule
+.PHONY : abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_py.dir/rule
+
+# Convenience name for target.
+roi_msgs_generate_messages_py: abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_py.dir/rule
+
+.PHONY : roi_msgs_generate_messages_py
+
+# fast build rule for target.
+roi_msgs_generate_messages_py/fast:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_py.dir/build.make abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_py.dir/build
+.PHONY : roi_msgs_generate_messages_py/fast
+
+# Convenience name for target.
+abb_irb2400_test/CMakeFiles/abb_irb2400_test_generate_messages_py.dir/rule:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f CMakeFiles/Makefile2 abb_irb2400_test/CMakeFiles/abb_irb2400_test_generate_messages_py.dir/rule
+.PHONY : abb_irb2400_test/CMakeFiles/abb_irb2400_test_generate_messages_py.dir/rule
+
+# Convenience name for target.
+abb_irb2400_test_generate_messages_py: abb_irb2400_test/CMakeFiles/abb_irb2400_test_generate_messages_py.dir/rule
+
+.PHONY : abb_irb2400_test_generate_messages_py
+
+# fast build rule for target.
+abb_irb2400_test_generate_messages_py/fast:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f abb_irb2400_test/CMakeFiles/abb_irb2400_test_generate_messages_py.dir/build.make abb_irb2400_test/CMakeFiles/abb_irb2400_test_generate_messages_py.dir/build
+.PHONY : abb_irb2400_test_generate_messages_py/fast
+
+# Convenience name for target.
+abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_nodejs.dir/rule:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f CMakeFiles/Makefile2 abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_nodejs.dir/rule
+.PHONY : abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_nodejs.dir/rule
+
+# Convenience name for target.
+roi_msgs_generate_messages_nodejs: abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_nodejs.dir/rule
+
+.PHONY : roi_msgs_generate_messages_nodejs
+
+# fast build rule for target.
+roi_msgs_generate_messages_nodejs/fast:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_nodejs.dir/build.make abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_nodejs.dir/build
+.PHONY : roi_msgs_generate_messages_nodejs/fast
+
+# Convenience name for target.
+abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_lisp.dir/rule:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f CMakeFiles/Makefile2 abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_lisp.dir/rule
+.PHONY : abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+roi_msgs_generate_messages_lisp: abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_lisp.dir/rule
+
+.PHONY : roi_msgs_generate_messages_lisp
+
+# fast build rule for target.
+roi_msgs_generate_messages_lisp/fast:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_lisp.dir/build.make abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_lisp.dir/build
+.PHONY : roi_msgs_generate_messages_lisp/fast
+
+# Convenience name for target.
+abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_cpp.dir/rule:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f CMakeFiles/Makefile2 abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_cpp.dir/rule
+.PHONY : abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+roi_msgs_generate_messages_cpp: abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_cpp.dir/rule
+
+.PHONY : roi_msgs_generate_messages_cpp
+
+# fast build rule for target.
+roi_msgs_generate_messages_cpp/fast:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_cpp.dir/build.make abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_cpp.dir/build
+.PHONY : roi_msgs_generate_messages_cpp/fast
 
 # Convenience name for target.
 abb_irb2400_test/CMakeFiles/graph_msgs_generate_messages_nodejs.dir/rule:
@@ -766,6 +841,21 @@ dynamic_reconfigure_generate_messages_cpp: abb_irb2400_test/CMakeFiles/dynamic_r
 dynamic_reconfigure_generate_messages_cpp/fast:
 	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f abb_irb2400_test/CMakeFiles/dynamic_reconfigure_generate_messages_cpp.dir/build.make abb_irb2400_test/CMakeFiles/dynamic_reconfigure_generate_messages_cpp.dir/build
 .PHONY : dynamic_reconfigure_generate_messages_cpp/fast
+
+# Convenience name for target.
+abb_irb2400_test/CMakeFiles/RobotControl.dir/rule:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f CMakeFiles/Makefile2 abb_irb2400_test/CMakeFiles/RobotControl.dir/rule
+.PHONY : abb_irb2400_test/CMakeFiles/RobotControl.dir/rule
+
+# Convenience name for target.
+RobotControl: abb_irb2400_test/CMakeFiles/RobotControl.dir/rule
+
+.PHONY : RobotControl
+
+# fast build rule for target.
+RobotControl/fast:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f abb_irb2400_test/CMakeFiles/RobotControl.dir/build.make abb_irb2400_test/CMakeFiles/RobotControl.dir/build
+.PHONY : RobotControl/fast
 
 # Convenience name for target.
 abb_irb2400_test/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/rule:
@@ -1473,6 +1563,21 @@ object_recognition_msgs_generate_messages_nodejs/fast:
 .PHONY : object_recognition_msgs_generate_messages_nodejs/fast
 
 # Convenience name for target.
+abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_eus.dir/rule:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f CMakeFiles/Makefile2 abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_eus.dir/rule
+.PHONY : abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_eus.dir/rule
+
+# Convenience name for target.
+roi_msgs_generate_messages_eus: abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_eus.dir/rule
+
+.PHONY : roi_msgs_generate_messages_eus
+
+# fast build rule for target.
+roi_msgs_generate_messages_eus/fast:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_eus.dir/build.make abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_eus.dir/build
+.PHONY : roi_msgs_generate_messages_eus/fast
+
+# Convenience name for target.
 abb_irb2400_test/CMakeFiles/std_srvs_generate_messages_nodejs.dir/rule:
 	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f CMakeFiles/Makefile2 abb_irb2400_test/CMakeFiles/std_srvs_generate_messages_nodejs.dir/rule
 .PHONY : abb_irb2400_test/CMakeFiles/std_srvs_generate_messages_nodejs.dir/rule
@@ -1772,6 +1877,60 @@ octomap_msgs_generate_messages_lisp/fast:
 	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f abb_irb2400_test/CMakeFiles/octomap_msgs_generate_messages_lisp.dir/build.make abb_irb2400_test/CMakeFiles/octomap_msgs_generate_messages_lisp.dir/build
 .PHONY : octomap_msgs_generate_messages_lisp/fast
 
+src/robotcontrol.o: src/robotcontrol.cpp.o
+
+.PHONY : src/robotcontrol.o
+
+# target to build an object file
+src/robotcontrol.cpp.o:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f abb_irb2400_test/CMakeFiles/RobotControl.dir/build.make abb_irb2400_test/CMakeFiles/RobotControl.dir/src/robotcontrol.cpp.o
+.PHONY : src/robotcontrol.cpp.o
+
+src/robotcontrol.i: src/robotcontrol.cpp.i
+
+.PHONY : src/robotcontrol.i
+
+# target to preprocess a source file
+src/robotcontrol.cpp.i:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f abb_irb2400_test/CMakeFiles/RobotControl.dir/build.make abb_irb2400_test/CMakeFiles/RobotControl.dir/src/robotcontrol.cpp.i
+.PHONY : src/robotcontrol.cpp.i
+
+src/robotcontrol.s: src/robotcontrol.cpp.s
+
+.PHONY : src/robotcontrol.s
+
+# target to generate assembly for a file
+src/robotcontrol.cpp.s:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f abb_irb2400_test/CMakeFiles/RobotControl.dir/build.make abb_irb2400_test/CMakeFiles/RobotControl.dir/src/robotcontrol.cpp.s
+.PHONY : src/robotcontrol.cpp.s
+
+src/robotcontrol_node.o: src/robotcontrol_node.cpp.o
+
+.PHONY : src/robotcontrol_node.o
+
+# target to build an object file
+src/robotcontrol_node.cpp.o:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f abb_irb2400_test/CMakeFiles/RobotControl_node.dir/build.make abb_irb2400_test/CMakeFiles/RobotControl_node.dir/src/robotcontrol_node.cpp.o
+.PHONY : src/robotcontrol_node.cpp.o
+
+src/robotcontrol_node.i: src/robotcontrol_node.cpp.i
+
+.PHONY : src/robotcontrol_node.i
+
+# target to preprocess a source file
+src/robotcontrol_node.cpp.i:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f abb_irb2400_test/CMakeFiles/RobotControl_node.dir/build.make abb_irb2400_test/CMakeFiles/RobotControl_node.dir/src/robotcontrol_node.cpp.i
+.PHONY : src/robotcontrol_node.cpp.i
+
+src/robotcontrol_node.s: src/robotcontrol_node.cpp.s
+
+.PHONY : src/robotcontrol_node.s
+
+# target to generate assembly for a file
+src/robotcontrol_node.cpp.s:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f abb_irb2400_test/CMakeFiles/RobotControl_node.dir/build.make abb_irb2400_test/CMakeFiles/RobotControl_node.dir/src/robotcontrol_node.cpp.s
+.PHONY : src/robotcontrol_node.cpp.s
+
 src/test_custom.o: src/test_custom.cpp.o
 
 .PHONY : src/test_custom.o
@@ -1837,9 +1996,9 @@ help:
 	@echo "... install"
 	@echo "... list_install_components"
 	@echo "... abb_irb2400_test_custom_node"
+	@echo "... RobotControl_node"
 	@echo "... test"
 	@echo "... abb_irb2400_test_genpy"
-	@echo "... abb_irb2400_test_generate_messages_py"
 	@echo "... abb_irb2400_test_gennodejs"
 	@echo "... abb_irb2400_test_generate_messages_nodejs"
 	@echo "... abb_irb2400_test_generate_messages_lisp"
@@ -1847,6 +2006,11 @@ help:
 	@echo "... abb_irb2400_test_generate_messages_eus"
 	@echo "... abb_irb2400_test_gencpp"
 	@echo "... abb_irb2400_test_generate_messages_cpp"
+	@echo "... roi_msgs_generate_messages_py"
+	@echo "... abb_irb2400_test_generate_messages_py"
+	@echo "... roi_msgs_generate_messages_nodejs"
+	@echo "... roi_msgs_generate_messages_lisp"
+	@echo "... roi_msgs_generate_messages_cpp"
 	@echo "... graph_msgs_generate_messages_nodejs"
 	@echo "... graph_msgs_generate_messages_cpp"
 	@echo "... std_srvs_generate_messages_py"
@@ -1878,6 +2042,7 @@ help:
 	@echo "... rosgraph_msgs_generate_messages_cpp"
 	@echo "... tf_generate_messages_py"
 	@echo "... dynamic_reconfigure_generate_messages_cpp"
+	@echo "... RobotControl"
 	@echo "... actionlib_msgs_generate_messages_cpp"
 	@echo "... tf_generate_messages_eus"
 	@echo "... tf_generate_messages_nodejs"
@@ -1926,6 +2091,7 @@ help:
 	@echo "... tf2_msgs_generate_messages_eus"
 	@echo "... visualization_msgs_generate_messages_cpp"
 	@echo "... object_recognition_msgs_generate_messages_nodejs"
+	@echo "... roi_msgs_generate_messages_eus"
 	@echo "... std_srvs_generate_messages_nodejs"
 	@echo "... octomap_msgs_generate_messages_nodejs"
 	@echo "... object_recognition_msgs_generate_messages_py"
@@ -1946,6 +2112,12 @@ help:
 	@echo "... std_srvs_generate_messages_eus"
 	@echo "... roscpp_generate_messages_lisp"
 	@echo "... octomap_msgs_generate_messages_lisp"
+	@echo "... src/robotcontrol.o"
+	@echo "... src/robotcontrol.i"
+	@echo "... src/robotcontrol.s"
+	@echo "... src/robotcontrol_node.o"
+	@echo "... src/robotcontrol_node.i"
+	@echo "... src/robotcontrol_node.s"
 	@echo "... src/test_custom.o"
 	@echo "... src/test_custom.i"
 	@echo "... src/test_custom.s"

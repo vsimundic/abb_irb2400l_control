@@ -298,6 +298,19 @@ abb_irb2400_test_custom_node/fast:
 .PHONY : abb_irb2400_test_custom_node/fast
 
 #=============================================================================
+# Target rules for targets named RobotControl_node
+
+# Build rule for target.
+RobotControl_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 RobotControl_node
+.PHONY : RobotControl_node
+
+# fast build rule for target.
+RobotControl_node/fast:
+	$(MAKE) -f abb_irb2400_test/CMakeFiles/RobotControl_node.dir/build.make abb_irb2400_test/CMakeFiles/RobotControl_node.dir/build
+.PHONY : RobotControl_node/fast
+
+#=============================================================================
 # Target rules for targets named abb_irb2400_test_genpy
 
 # Build rule for target.
@@ -309,19 +322,6 @@ abb_irb2400_test_genpy: cmake_check_build_system
 abb_irb2400_test_genpy/fast:
 	$(MAKE) -f abb_irb2400_test/CMakeFiles/abb_irb2400_test_genpy.dir/build.make abb_irb2400_test/CMakeFiles/abb_irb2400_test_genpy.dir/build
 .PHONY : abb_irb2400_test_genpy/fast
-
-#=============================================================================
-# Target rules for targets named abb_irb2400_test_generate_messages_py
-
-# Build rule for target.
-abb_irb2400_test_generate_messages_py: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 abb_irb2400_test_generate_messages_py
-.PHONY : abb_irb2400_test_generate_messages_py
-
-# fast build rule for target.
-abb_irb2400_test_generate_messages_py/fast:
-	$(MAKE) -f abb_irb2400_test/CMakeFiles/abb_irb2400_test_generate_messages_py.dir/build.make abb_irb2400_test/CMakeFiles/abb_irb2400_test_generate_messages_py.dir/build
-.PHONY : abb_irb2400_test_generate_messages_py/fast
 
 #=============================================================================
 # Target rules for targets named abb_irb2400_test_gennodejs
@@ -413,6 +413,71 @@ abb_irb2400_test_generate_messages_cpp: cmake_check_build_system
 abb_irb2400_test_generate_messages_cpp/fast:
 	$(MAKE) -f abb_irb2400_test/CMakeFiles/abb_irb2400_test_generate_messages_cpp.dir/build.make abb_irb2400_test/CMakeFiles/abb_irb2400_test_generate_messages_cpp.dir/build
 .PHONY : abb_irb2400_test_generate_messages_cpp/fast
+
+#=============================================================================
+# Target rules for targets named roi_msgs_generate_messages_py
+
+# Build rule for target.
+roi_msgs_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 roi_msgs_generate_messages_py
+.PHONY : roi_msgs_generate_messages_py
+
+# fast build rule for target.
+roi_msgs_generate_messages_py/fast:
+	$(MAKE) -f abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_py.dir/build.make abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_py.dir/build
+.PHONY : roi_msgs_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named abb_irb2400_test_generate_messages_py
+
+# Build rule for target.
+abb_irb2400_test_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 abb_irb2400_test_generate_messages_py
+.PHONY : abb_irb2400_test_generate_messages_py
+
+# fast build rule for target.
+abb_irb2400_test_generate_messages_py/fast:
+	$(MAKE) -f abb_irb2400_test/CMakeFiles/abb_irb2400_test_generate_messages_py.dir/build.make abb_irb2400_test/CMakeFiles/abb_irb2400_test_generate_messages_py.dir/build
+.PHONY : abb_irb2400_test_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named roi_msgs_generate_messages_nodejs
+
+# Build rule for target.
+roi_msgs_generate_messages_nodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 roi_msgs_generate_messages_nodejs
+.PHONY : roi_msgs_generate_messages_nodejs
+
+# fast build rule for target.
+roi_msgs_generate_messages_nodejs/fast:
+	$(MAKE) -f abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_nodejs.dir/build.make abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_nodejs.dir/build
+.PHONY : roi_msgs_generate_messages_nodejs/fast
+
+#=============================================================================
+# Target rules for targets named roi_msgs_generate_messages_lisp
+
+# Build rule for target.
+roi_msgs_generate_messages_lisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 roi_msgs_generate_messages_lisp
+.PHONY : roi_msgs_generate_messages_lisp
+
+# fast build rule for target.
+roi_msgs_generate_messages_lisp/fast:
+	$(MAKE) -f abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_lisp.dir/build.make abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_lisp.dir/build
+.PHONY : roi_msgs_generate_messages_lisp/fast
+
+#=============================================================================
+# Target rules for targets named roi_msgs_generate_messages_cpp
+
+# Build rule for target.
+roi_msgs_generate_messages_cpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 roi_msgs_generate_messages_cpp
+.PHONY : roi_msgs_generate_messages_cpp
+
+# fast build rule for target.
+roi_msgs_generate_messages_cpp/fast:
+	$(MAKE) -f abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_cpp.dir/build.make abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_cpp.dir/build
+.PHONY : roi_msgs_generate_messages_cpp/fast
 
 #=============================================================================
 # Target rules for targets named graph_msgs_generate_messages_nodejs
@@ -803,6 +868,19 @@ dynamic_reconfigure_generate_messages_cpp: cmake_check_build_system
 dynamic_reconfigure_generate_messages_cpp/fast:
 	$(MAKE) -f abb_irb2400_test/CMakeFiles/dynamic_reconfigure_generate_messages_cpp.dir/build.make abb_irb2400_test/CMakeFiles/dynamic_reconfigure_generate_messages_cpp.dir/build
 .PHONY : dynamic_reconfigure_generate_messages_cpp/fast
+
+#=============================================================================
+# Target rules for targets named RobotControl
+
+# Build rule for target.
+RobotControl: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 RobotControl
+.PHONY : RobotControl
+
+# fast build rule for target.
+RobotControl/fast:
+	$(MAKE) -f abb_irb2400_test/CMakeFiles/RobotControl.dir/build.make abb_irb2400_test/CMakeFiles/RobotControl.dir/build
+.PHONY : RobotControl/fast
 
 #=============================================================================
 # Target rules for targets named actionlib_msgs_generate_messages_cpp
@@ -1416,6 +1494,19 @@ object_recognition_msgs_generate_messages_nodejs/fast:
 .PHONY : object_recognition_msgs_generate_messages_nodejs/fast
 
 #=============================================================================
+# Target rules for targets named roi_msgs_generate_messages_eus
+
+# Build rule for target.
+roi_msgs_generate_messages_eus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 roi_msgs_generate_messages_eus
+.PHONY : roi_msgs_generate_messages_eus
+
+# fast build rule for target.
+roi_msgs_generate_messages_eus/fast:
+	$(MAKE) -f abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_eus.dir/build.make abb_irb2400_test/CMakeFiles/roi_msgs_generate_messages_eus.dir/build
+.PHONY : roi_msgs_generate_messages_eus/fast
+
+#=============================================================================
 # Target rules for targets named std_srvs_generate_messages_nodejs
 
 # Build rule for target.
@@ -1698,8 +1789,8 @@ help:
 	@echo "... gtest_main"
 	@echo "... gtest"
 	@echo "... abb_irb2400_test_custom_node"
+	@echo "... RobotControl_node"
 	@echo "... abb_irb2400_test_genpy"
-	@echo "... abb_irb2400_test_generate_messages_py"
 	@echo "... abb_irb2400_test_gennodejs"
 	@echo "... abb_irb2400_test_generate_messages_nodejs"
 	@echo "... abb_irb2400_test_generate_messages_lisp"
@@ -1707,6 +1798,11 @@ help:
 	@echo "... abb_irb2400_test_generate_messages_eus"
 	@echo "... abb_irb2400_test_gencpp"
 	@echo "... abb_irb2400_test_generate_messages_cpp"
+	@echo "... roi_msgs_generate_messages_py"
+	@echo "... abb_irb2400_test_generate_messages_py"
+	@echo "... roi_msgs_generate_messages_nodejs"
+	@echo "... roi_msgs_generate_messages_lisp"
+	@echo "... roi_msgs_generate_messages_cpp"
 	@echo "... graph_msgs_generate_messages_nodejs"
 	@echo "... graph_msgs_generate_messages_cpp"
 	@echo "... std_srvs_generate_messages_py"
@@ -1737,6 +1833,7 @@ help:
 	@echo "... rosgraph_msgs_generate_messages_cpp"
 	@echo "... tf_generate_messages_py"
 	@echo "... dynamic_reconfigure_generate_messages_cpp"
+	@echo "... RobotControl"
 	@echo "... actionlib_msgs_generate_messages_cpp"
 	@echo "... tf_generate_messages_eus"
 	@echo "... tf_generate_messages_nodejs"
@@ -1784,6 +1881,7 @@ help:
 	@echo "... tf2_msgs_generate_messages_eus"
 	@echo "... visualization_msgs_generate_messages_cpp"
 	@echo "... object_recognition_msgs_generate_messages_nodejs"
+	@echo "... roi_msgs_generate_messages_eus"
 	@echo "... std_srvs_generate_messages_nodejs"
 	@echo "... octomap_msgs_generate_messages_nodejs"
 	@echo "... object_recognition_msgs_generate_messages_py"

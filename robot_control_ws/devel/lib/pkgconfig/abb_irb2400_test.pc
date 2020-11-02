@@ -3,6 +3,6 @@ prefix=/home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/devel
 Name: abb_irb2400_test
 Description: Description of abb_irb2400_test
 Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
+Cflags: -I/home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/src/abb_irb2400_test/include
+Libs: -L${prefix}/lib -lRobotControl
+Requires: cmake_modules interactive_markers moveit_core moveit_ros_perception moveit_ros_planning_interface pluginlib roscpp std_msgs roi_msgs

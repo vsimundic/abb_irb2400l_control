@@ -17,6 +17,9 @@
 #include <std_msgs/Float64.h>
 #include <cv_bridge/cv_bridge.h>
 
+#include "roi_msgs/HumanEntries.h"
+#include "roi_msgs/HumanEntry.h"
+
 #include <ros/console.h>
 
 #define SPEED_SLOW 0.05
@@ -30,6 +33,54 @@ bool timerStopTrigger = false;
 bool resetTimer = false;
 
 double current_speed = SPEED_FAST;
+
+// Structure for fixed point
+struct fixedPt
+{
+  double x;
+  double y;
+  double z;
+} pt;
+
+// Variables for robot center
+double x = 0.0;
+double y = 0.0;
+double z = 0.0;
+
+// Euclidean distance between fixed point and a human's head
+double entryDistance = 0.0;
+
+void humanEntriesCallback(const roi_msgs::HumanEntriesConstPtr& entries_msg)
+{
+    // std::vector<roi_msgs::HumanEntry>::iterator pose_iterator = entries_msg->entries.begin();
+
+    for(int i = 0; entries_msg->entries.size(); i++)
+    {
+        roi_msgs::HumanEntry entry = entries_msg->entries[i];
+
+        x = entry.personCentroidY;
+        y = -entry.personCentroidX;
+        z = -entry.personCentroidZ;
+
+        entryDistance = sqrt(pow(pt.x - x, 2) + pow(pt.y - y, 2));
+
+        if(entryDistance < 2.0)
+        {
+            ROS_ERROR("Distance: %.2f", entryDistance);
+            
+            // Slow down since there's a human in there somewhere
+            if(current_speed == SPEED_FAST)
+            {
+                breakTrajectoryExecution = true;
+                current_speed = SPEED_SLOW;
+            } 
+            
+            resetTimer = true;
+            break;
+        }
+    }
+}
+
 
 // Callback if the data for distance comes 
 void distanceCallback(const std_msgs::Float64::ConstPtr& distance_msg)
@@ -68,8 +119,14 @@ int main(int argc, char **argv)
     ros::AsyncSpinner spinner(3);
     spinner.start();
 
+    // Define the fixed pt
+    pt.x = 2.0;    // in method this is y
+    pt.y = -2.0;    // in method this is minus x
+    pt.z = -0.15;  // in method this is minus z
+
     // Publishers and subscribers
-    ros::Subscriber entry_distance_sub = node_handle.subscribe("/distance", 2, distanceCallback);
+    // ros::Subscriber entry_distance_sub = node_handle.subscribe("/distance", 10, distanceCallback);
+    ros::Subscriber entry_distance_sub = node_handle.subscribe("/human_tracker_data", 10, humanEntriesCallback);
     ros::Publisher display_publisher = node_handle.advertise<moveit_msgs::DisplayTrajectory>("/move_group/display_planned_path", 1, true);
 
 
@@ -152,8 +209,6 @@ int main(int argc, char **argv)
 
         // move_group.setPoseTarget(target_pose);
         move_group.setPoseTarget(current_target_pose);
-
-
 
         // Motion plan from currrent location to custom position
         success = (move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);

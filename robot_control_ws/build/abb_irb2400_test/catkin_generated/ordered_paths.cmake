@@ -1,1 +1,1 @@
-set(ORDERED_PATHS "/opt/ros/melodic/lib")
+set(ORDERED_PATHS "/opt/ros/melodic/lib;/home/valentin/FAKS/HDR/human_tracker/devel/lib")

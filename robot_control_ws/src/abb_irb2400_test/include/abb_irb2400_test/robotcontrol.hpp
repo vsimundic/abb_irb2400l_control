@@ -91,7 +91,7 @@ namespace RobotControlNamespace
             moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
             
             bool planning_success;
-            moveit::planning_interface::MoveGroupInterface::Plan my_plan;
+            // moveit::planning_interface::MoveGroupInterface::Plan my_plan;
 
             std::vector<double> joint_group_positions;
             const robot_state::JointModelGroup* joint_model_group;
@@ -112,6 +112,22 @@ namespace RobotControlNamespace
 
             // Flags for control
             bool breakTrajectoryExecution;
+
+
+            
+            /****** HUMAN DETECTION STUFF ******/
+            const double BASE_REACH;
+            double multiplierMediumVelocity;
+            double multiplierHighVelocity;
+            double calculatedReach;
+            double tempCalculatedReach;
+
+
+            double humanVelocity;
+
+
+
+            double calculateReach(roi_msgs::HumanEntries entries);
 
     }; // class RobotControl
 

@@ -1,0 +1,18 @@
+%YAML:1.0
+image_width: 640
+image_height: 480
+
+camera_matrix: !!opencv-matrix
+  rows: 3
+  cols: 3
+  dt: d
+  data: [ 558.50599,    0.     ,  292.26984,
+            0.     ,  548.00333,  253.66898,
+            0.     ,    0.     ,    1.     ]
+camera_model: plumb_bob
+distortion_coefficients: !!opencv-matrix
+  rows: 1
+  cols: 5
+  dt: d
+  data: [0.178908, -0.298163, -0.002363, -0.010328, 0.000000]
+

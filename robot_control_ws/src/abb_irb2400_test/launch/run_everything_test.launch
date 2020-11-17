@@ -6,7 +6,7 @@
 
 
     <include file="$(find timed_roslaunch)/timed_roslaunch.launch">
-        <arg name="time" value="10" />
+        <arg name="time" value="5" />
         <arg name="pkg" value="openni_launch" />
         <arg name="file" value="openni.launch" />
         <arg name="node_name" value="timed_roslaunch_openni" />
@@ -21,14 +21,14 @@
     </include>
 
     <include file="$(find timed_roslaunch)/timed_roslaunch.launch">
-        <arg name="time" value="25" />
+        <arg name="time" value="15" />
         <arg name="pkg" value="System_Launch" />
         <arg name="file" value="run_kinect_node.launch" />
         <arg name="node_name" value="timed_roslaunch_human_tracker" />
     </include>
     
     <include file="$(find timed_roslaunch)/timed_roslaunch.launch">
-        <arg name="time" value="30" />
+        <arg name="time" value="20" />
         <arg name="pkg" value="abb_irb2400_test" />
         <arg name="file" value="run_custom_test.launch" />
         <arg name="node_name" value="timed_roslaunch_custom_trajectory" />

@@ -1,0 +1,7 @@
+<launch>
+    <node name="cameraCalib" pkg="abb2400_sim" type="cameraCalib" output="screen">
+        <param name="cam_type" value="kinect" />
+        <remap from="DepthImage" to="/camera/depth/image_raw" />
+        <remap from="ColorImage" to="/camera/rgb/image_color" />
+    </node>
+</launch>

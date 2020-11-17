@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "browse": {
+                "databaseFilename": "",
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "includePath": [
+                "/home/valentin/FAKS/HDR/robot_workspaces/calibration/calibration_ws/devel/include/**",
+                "/home/valentin/FAKS/HDR/openni_kinect/devel/include/**",
+                "/opt/ros/melodic/include/**",
+                "/home/valentin/FAKS/HDR/robot_workspaces/calibration/calibration_ws/src/abbcmd/include/**",
+                "/home/valentin/FAKS/HDR/robot_workspaces/catkin_abb_ws/src/abb_driver/include/**",
+                "/home/valentin/FAKS/HDR/openni_kinect/src/openni_camera/openni_camera/include/**",
+                "/usr/include/**"
+            ],
+            "name": "ROS",
+            "intelliSenseMode": "gcc-x64",
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++14"
+        }
+    ],
+    "version": 4
+}

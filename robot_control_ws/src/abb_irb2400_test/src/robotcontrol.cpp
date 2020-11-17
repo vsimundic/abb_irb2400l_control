@@ -7,6 +7,7 @@ namespace RobotControlNamespace
     pnh_(private_node_handle), 
     SPEED_FAST(0.7), 
     SPEED_SLOW(0.05),
+    BASE_REACH(1.81),
     PLANNING_GROUP("manipulator"),
     move_group(moveit::planning_interface::MoveGroupInterface(PLANNING_GROUP))
     {
@@ -21,6 +22,7 @@ namespace RobotControlNamespace
 
     void RobotControl::init()
     {
+        ROS_ERROR("In init!");
         // Define the fixed point of the robot relative to the camera
         robotFixedPoint.x = 2.0;
         robotFixedPoint.y = -2.0;
@@ -45,20 +47,20 @@ namespace RobotControlNamespace
         geometry_msgs::Pose target_pose2;
         
         // pose 1
-        target_pose1.position.x = 1.0252; target_pose1.position.y = -0.680236; target_pose1.position.z = 1.54327;
-        target_pose1.orientation.w = 0.707101; target_pose1.orientation.x = -4.4225e-06; target_pose1.orientation.y = 0.707112; target_pose1.orientation.z = -192274e-05;
+        target_pose1.position.x = 0.735395; target_pose1.position.y = -0.427505; target_pose1.position.z = 1.82907;
+        target_pose1.orientation.w = 0.707101; target_pose1.orientation.x = 4.4225e-05; target_pose1.orientation.y = 0.707112; target_pose1.orientation.z = -3.34027e-05;
         // pose 2
-        target_pose2.position.x = 1.19964; target_pose2.position.y = 0.501868; target_pose2.position.z = 1.58109;
-        target_pose2.orientation.w = -2.55245e-05; target_pose2.orientation.x = 0.707112; target_pose2.orientation.y = -1.12172e-05; target_pose2.orientation.z = 0.707102;
+        target_pose2.position.x = 0.740174; target_pose2.position.y = 0.628105; target_pose2.position.z = 1.60914;
+        target_pose2.orientation.w = 0.707077; target_pose2.orientation.x = 3.86214e-05; target_pose2.orientation.y = 0.707135; target_pose2.orientation.z = 4.3254e-05;
     
         target_poses.push_back(target_pose1);
         target_poses.push_back(target_pose2);
 
         current_target_pose_iterator = target_poses.begin();
 
-        // Setting velocity scaling factor and max planning time
-        move_group.setMaxVelocityScalingFactor(CURRENT_SPEED);
-        move_group.setPlanningTime(10);
+        // // Setting velocity scaling factor and max planning time
+        // move_group.setMaxVelocityScalingFactor(CURRENT_SPEED);
+        // move_group.setPlanningTime(10.0);
 
         // Timer is started only when a human enters the area
         timer.stop();
@@ -70,20 +72,55 @@ namespace RobotControlNamespace
          */   
         breakTrajectoryExecution = false;
 
+        CURRENT_SPEED = SPEED_FAST;
+
+        multiplierHighVelocity = 1.5;
+        multiplierMediumVelocity = 1.1;
+        calculatedReach = BASE_REACH;
+
+        ROS_ERROR("End of init!");
     }
 
     void RobotControl::timerCallback(const ros::TimerEvent& event)
     {
         breakTrajectoryExecution = true;
         
-        CURRENT_SPEED = SPEED_SLOW;
+        CURRENT_SPEED = SPEED_FAST;
+        calculatedReach = BASE_REACH;
 
         timer.stop();
     }
 
+    
+    double RobotControl::calculateReach(roi_msgs::HumanEntries entries)
+    {
+        double currentTempCalculatedReach = BASE_REACH;
+
+        for(int i = 0; i < entries.entries.size(); i++)
+        {
+            humanVelocity = sqrt(pow(entries.entries[i].Xvelocity, 2) + pow(entries.entries[i].Yvelocity, 2));
+
+            if(humanVelocity < 0.1)
+                tempCalculatedReach = BASE_REACH;
+            else if(humanVelocity >= 0.1 && humanVelocity < 1.0)
+                tempCalculatedReach = multiplierMediumVelocity*BASE_REACH;
+            else if(humanVelocity >= 1.0)
+                tempCalculatedReach = multiplierHighVelocity*BASE_REACH;
+            
+            if(tempCalculatedReach > currentTempCalculatedReach)
+                currentTempCalculatedReach = tempCalculatedReach;
+        }
+
+        return currentTempCalculatedReach;
+        
+    }
+
     void RobotControl::humanEntriesCallback(const roi_msgs::HumanEntriesConstPtr& entries_msg)
     {
-        for(int i = 0; entries_msg->entries.size(); i++)
+        calculatedReach = RobotControl::calculateReach(*entries_msg);
+
+
+        for(int i = 0; i < entries_msg->entries.size(); i++)
         {
 
             entryPoint.x = entries_msg->entries[i].personCentroidY;
@@ -92,14 +129,18 @@ namespace RobotControlNamespace
 
             entryDistance = sqrt(pow(robotFixedPoint.x - entryPoint.x, 2) + pow(robotFixedPoint.y - entryPoint.y, 2));
 
-            if(entryDistance < 2.0)
+            if(entryDistance < calculatedReach)
             {
                 ROS_ERROR("Distance: %.2f", entryDistance);
+                ROS_ERROR("Human velocity: %.2f", humanVelocity);
+                ROS_ERROR("REACH: %f", calculatedReach);
+                ROS_WARN("\n########################################################\n");
+
 
                 if(CURRENT_SPEED == SPEED_FAST)
                 {
                     breakTrajectoryExecution = true;
-                    CURRENT_SPEED == SPEED_SLOW;
+                    CURRENT_SPEED = SPEED_SLOW;
                 }
 
                 RobotControl::resetTimer();
@@ -116,18 +157,35 @@ namespace RobotControlNamespace
 
     void RobotControl::loopEverything()
     {
-        sleep(2.0);
+        // sleep(2.0);
+        ROS_ERROR("In loop everything!");
+        
+        // Setting velocity scaling factor and max planning time
+        move_group.setMaxVelocityScalingFactor(CURRENT_SPEED);
+        move_group.setPlanningTime(10.0);
+        
+        ROS_ERROR("Set planning time finished");
+        
+        moveit::planning_interface::MoveGroupInterface::Plan my_plan;
+        ROS_ERROR("Initialized plan");
+        
         while(ros::ok())
         {
+            // ROS_ERROR("Speeeeeeeeed: %f", CURRENT_SPEED);
             move_group.setMaxVelocityScalingFactor(CURRENT_SPEED);
-            move_group.setPoseTarget(*current_target_pose_iterator);
+            
+
+            geometry_msgs::Pose pose_now = *current_target_pose_iterator;
+
+            move_group.setPoseTarget(pose_now);
+
 
             planning_success = (move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
-            ROS_INFO_NAMED("Plan succession", "Visualizing plan 1 (pose goal) %s", planning_success ? "" : "FAILED");
+            // ROS_INFO_NAMED("Plan succession", "Visualizing plan 1 (pose goal) %s", planning_success ? "" : "FAILED");
             assert(planning_success);
 
             move_group.asyncExecute(my_plan);
-            ROS_WARN("Executing");
+            // ROS_WARN("Executing");
 
             do
             {

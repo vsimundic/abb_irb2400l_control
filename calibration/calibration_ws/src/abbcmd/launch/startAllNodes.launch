@@ -1,0 +1,43 @@
+<launch>
+    <arg name="robot_ip" default="172.16.106.185"/>
+    <arg name="camera_type" default="kinect"/>
+ 
+    <include file="$(find abb_irb2400_moveit_config)/launch/moveit_planning_execution.launch">
+        <arg name="sim" value="true"/>
+        <!-- <arg name="robot_ip" value="$(arg robot_ip)"/> -->
+    </include>
+    <node name="moveService" pkg="abb2400_sim" type="moveit_service.py" output="screen"/>
+
+    <group if="$(eval arg('camera_type') == 'astra')">
+        <!-- <node name="astra" pkg="astra_camera" type="astra_camera_node" output="screen"/> -->
+
+        <include file="$(find timed_roslaunch)/timed_roslaunch.launch">
+            <arg name="time"        value="5" />
+            <arg name="pkg"         value="astra_camera" />
+            <arg name="file"        value="astra.launch" />
+            <arg name="node_name"   value="timed_roslaunch_astra" />
+        </include>
+    </group>
+
+    <group if="$(eval arg('camera_type') == 'kinect')">
+        <include file="$(find timed_roslaunch)/timed_roslaunch.launch">
+            <arg name="time"        value="5" />
+            <arg name="pkg"         value="openni_launch" />
+            <arg name="file"        value="openni.launch" />
+            <!-- <arg name="value"        value="depth_registration:=true" /> -->
+            <arg name="node_name"   value="timed_roslaunch_openni" />        
+        </include>
+
+
+        <!-- <include file="$(find openni_launch)/launch/openni.launch">
+            <arg name="depth_registration" value="true"/>
+        </include> -->
+
+        <!-- <include file="$(find timed_roslaunch)/timed_roslaunch.launch">
+            <arg name="time"        value="10" />
+            <arg name="pkg"         value="abb2400_sim" />
+            <arg name="file"        value="run_camera_calib_kinect.launch" />
+            <arg name="node_name"   value="timed_roslaunch_kinectCameraCalib" />
+        </include> -->
+    </group>
+</launch>

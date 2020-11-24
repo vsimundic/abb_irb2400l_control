@@ -82,6 +82,8 @@ RMM::RMM()
 	myfile >> z_max;
 	myfile.close();
 
+	// set dictionary
+	MDetector.setDictionary(0xFFFF);
 
 	height = 0;
 	toolID = 921;
@@ -89,7 +91,8 @@ RMM::RMM()
 	objectID = 537;
 	speed = 50;
 	
-	MarkerSize = 0.13;
+	MarkerSize = 0.71;
+	ROS_ERROR("MARKER SIZE: %f", MarkerSize);
 	
 	ax = 1.0618;
 	bx = -9.9546;
@@ -237,10 +240,10 @@ void RMM::CalibrateABB()
 
 
 	/* MOJE */
-	qw = 0.645625;
-	qx = -0.332831;
-	qy = 0.577856;
-	qz = 0.372121;
+	qw = 0.645845;
+	qx = -0.332889;
+	qy = 0.577601;
+	qz = 0.372084;
 
 	/* ORIGINALNO */
 	// qw = 0.56864;

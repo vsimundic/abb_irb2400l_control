@@ -8,6 +8,8 @@ namespace RobotControlNamespace
     SPEED_FAST(0.7), 
     SPEED_SLOW(0.05),
     BASE_REACH(1.81),
+    mediumReach(BASE_REACH*1.1),
+    highReach(BASE_REACH*1.5),
     PLANNING_GROUP("manipulator"),
     move_group(moveit::planning_interface::MoveGroupInterface(PLANNING_GROUP))
     {
@@ -74,8 +76,6 @@ namespace RobotControlNamespace
 
         CURRENT_SPEED = SPEED_FAST;
 
-        multiplierHighVelocity = 1.5;
-        multiplierMediumVelocity = 1.1;
         calculatedReach = BASE_REACH;
 
         ROS_ERROR("End of init!");
@@ -102,10 +102,12 @@ namespace RobotControlNamespace
 
             if(humanVelocity < 0.1)
                 tempCalculatedReach = BASE_REACH;
+            
             else if(humanVelocity >= 0.1 && humanVelocity < 1.0)
-                tempCalculatedReach = multiplierMediumVelocity*BASE_REACH;
+                tempCalculatedReach = mediumReach;
+            
             else if(humanVelocity >= 1.0)
-                tempCalculatedReach = multiplierHighVelocity*BASE_REACH;
+                tempCalculatedReach = highReach;
             
             if(tempCalculatedReach > currentTempCalculatedReach)
                 currentTempCalculatedReach = tempCalculatedReach;

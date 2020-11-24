@@ -9,6 +9,9 @@
 			"/home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/devel/lib/python2.7/dist-packages",
 			"/home/valentin/FAKS/HDR/openni_kinect/devel/lib/python2.7/dist-packages",
 			"/opt/ros/melodic/lib/python2.7/dist-packages"
-		]
+		],
+		"files.associations": {
+			"cmath": "cpp"
+		}
 	}
 }

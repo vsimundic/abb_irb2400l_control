@@ -117,11 +117,15 @@ namespace RobotControlNamespace
             
             /****** HUMAN DETECTION STUFF ******/
             const double BASE_REACH;
-            double multiplierMediumVelocity;
-            double multiplierHighVelocity;
-            double calculatedReach;
-            double tempCalculatedReach;
+            const double mediumReach;
+            const double highReach;
 
+            
+            // used in the function for determining the reach
+            double tempCalculatedReach;
+            
+            // the value tempCalculatedReach outside of the function
+            double calculatedReach;
 
             double humanVelocity;
 

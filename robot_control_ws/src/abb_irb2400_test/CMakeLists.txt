@@ -18,7 +18,10 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   roi_msgs
+  cv_bridge
 )
+
+find_package(OpenCV 3 REQUIRED)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -65,6 +68,9 @@ target_link_libraries(RobotControl ${catkin_LIBRARIES})
 
 add_executable(RobotControl_node src/robotcontrol_node.cpp)
 target_link_libraries(RobotControl_node ${catkin_LIBRARIES} RobotControl)
+
+add_executable(RobotControl_node_test src/robotcontrol_node_test.cpp)
+target_link_libraries(RobotControl_node_test ${catkin_LIBRARIES} RobotControl)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries

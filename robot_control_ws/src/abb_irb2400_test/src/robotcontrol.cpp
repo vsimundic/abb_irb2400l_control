@@ -41,8 +41,6 @@ namespace RobotControlNamespace
         // move_group = ;
         move_group.allowReplanning(true);
 
-        //Defining timer
-        timer = pnh_.createTimer(ros::Duration(3.0), &RobotControl::timerCallback, this);
 
         //Robot poses
         geometry_msgs::Pose target_pose1;
@@ -64,14 +62,17 @@ namespace RobotControlNamespace
         // move_group.setMaxVelocityScalingFactor(CURRENT_SPEED);
         // move_group.setPlanningTime(10.0);
 
-        // Timer is started only when a human enters the area
-        timer.stop();
 
-        /** 
-         * Trajectory execution will break if the speed is fast and
-         * the human comes into the robot's area or if a timer runs
-         * out to speed the high speeeeeeed.
-         */   
+        // // Load transformation matrices
+        TRC = cv::Mat(4, 4, CV_32F);
+        TCR = cv::Mat(4, 4, CV_32F);
+
+        RobotControl::loadMatrices();
+
+        robotPosition = cv::Mat(1, 2, CV_32F);
+        robotPosition.at<float>(0,0) = TRC.at<float>(0, 3);
+        robotPosition.at<float>(0,1) = TRC.at<float>(1, 3);
+
         breakTrajectoryExecution = false;
 
         CURRENT_SPEED = SPEED_FAST;
@@ -81,47 +82,149 @@ namespace RobotControlNamespace
         ROS_ERROR("End of init!");
     }
 
-    void RobotControl::timerCallback(const ros::TimerEvent& event)
+    void RobotControl::loadMatrices()
     {
-        breakTrajectoryExecution = true;
-        
-        CURRENT_SPEED = SPEED_FAST;
-        calculatedReach = BASE_REACH;
 
-        timer.stop();
+        std::string matrices_path = ros::package::getPath("abb2400_sim") ;
+        std::string TRC_filename_path = matrices_path + "/TRC.txt";
+        std::string TCR_filename_path = matrices_path + "/TCR.txt";
+        
+        std::ifstream matrix_file;
+        matrix_file.open(TRC_filename_path);
+
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                matrix_file >> TRC.at<float>(i, j);
+            }
+        }
+
+        matrix_file.close();
+
+        matrix_file.open(TCR_filename_path);
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                matrix_file >> TCR.at<float>(i, j);
+            }
+        }
+
+        matrix_file.close();
+
     }
 
-    
-    double RobotControl::calculateReach(roi_msgs::HumanEntries entries)
+
+    float RobotControl::calculateRadialOperatorSpeed(roi_msgs::HumanEntry operatorEntry)
     {
-        double currentTempCalculatedReach = BASE_REACH;
+        double temp_vOperator[] = {operatorEntry.Xvelocity, operatorEntry.Yvelocity};
+        double temp_positionOperator[] = {operatorEntry.personCentroidX, operatorEntry.personCentroidY};
+
+        cv::Mat vOperator = cv::Mat(1, 2, CV_32F, temp_vOperator);
+        cv::Mat positionOperator = cv::Mat(1, 2, CV_32F, temp_positionOperator);
+        
+        // Assuming that the velocity of the base of the robot is 0
+        /**
+         * all variables listed below are vectors except vR (which is a single number)
+         * ##########################################################
+         * ### vR = (vOperator - vRobot) * (pOperator - pRobot)   ###
+         * ### -------------------------------------------------- ###
+         * ###                     |p2-p1|                        ###
+         * ##########################################################
+         */
+        // norm (with type NORM_L2) calculates the eucliedan distance between two vectors
+        return vOperator.dot(positionOperator - robotPosition) / cv::norm(positionOperator, robotPosition, cv::NORM_L2);
+    }
+
+    float RobotControl::calculateTangentialOperatorSpeed(float vOperator, float vRadial)
+    {
+        return vOperator*vOperator - vRadial*vRadial;
+    }
+
+    float RobotControl::calculateOperatorSpeed(roi_msgs::HumanEntry operatorEntry)
+    {
+        return sqrt(operatorEntry.Xvelocity*operatorEntry.Xvelocity + operatorEntry.Yvelocity*operatorEntry.Yvelocity);
+    }
+
+    /**
+     * 
+     * Conditions (1)
+     */
+    float RobotControl::calculateReach(roi_msgs::HumanEntries entries)
+    {
+        float calculatedReach = BASE_REACH;
+        float referenceReach = BASE_REACH;
 
         for(int i = 0; i < entries.entries.size(); i++)
         {
-            humanVelocity = sqrt(pow(entries.entries[i].Xvelocity, 2) + pow(entries.entries[i].Yvelocity, 2));
+            operatorSpeed = calculateOperatorSpeed(entries.entries[i]);
 
-            if(humanVelocity < 0.1)
-                tempCalculatedReach = BASE_REACH;
+            if(operatorSpeed < 0.1f)
+                calculatedReach = BASE_REACH;
             
-            else if(humanVelocity >= 0.1 && humanVelocity < 1.0)
-                tempCalculatedReach = mediumReach;
+            else if(operatorSpeed >= 0.1f && operatorSpeed < 1.0f)
+                calculatedReach = mediumReach;
             
-            else if(humanVelocity >= 1.0)
-                tempCalculatedReach = highReach;
+            else if(operatorSpeed >= 1.0f)
+                return highReach;
             
-            if(tempCalculatedReach > currentTempCalculatedReach)
-                currentTempCalculatedReach = tempCalculatedReach;
+            if(calculatedReach > referenceReach)
+                referenceReach = calculatedReach;
         }
 
-        return currentTempCalculatedReach;
+        return referenceReach;
+    }
+
+
+    /**
+     * 
+     * Conditions (2)
+     */
+    float RobotControl::calculateFinalRobotSpeed(roi_msgs::HumanEntries entries)
+    {
+        float reach = RobotControl::calculateReach(entries);
         
+        float vOperator;
+        float vRadial;
+        float vTangential;
+        float distanceFromRobotEnvelope;
+        
+        float vRobot = 1.0f;
+        float temp_vRobot;
+
+        cv::Mat positionOperator = cv::Mat(1, 2, CV_32F);
+
+        for(int i = 0; i < entries.entries.size(); i++)
+        {
+            positionOperator.at<float>(0, 0) = entries.entries[i].personCentroidX;
+            positionOperator.at<float>(0, 1) = entries.entries[i].personCentroidY;
+            distanceFromRobotEnvelope = cv::norm(positionOperator, robotPosition, cv::NORM_L2) - reach;
+
+            vOperator = calculateOperatorSpeed(entries.entries[i]);
+            vRadial = calculateRadialOperatorSpeed(entries.entries[i]);
+            vTangential = calculateTangentialOperatorSpeed(vOperator, vRadial);
+
+            if (vOperator < 0.1f) temp_vRobot = 0.5f;
+            if (vOperator >= 0.1f && vOperator < 2.0f) temp_vRobot = 0.5f/(10.0f*vTangential);
+            if (vOperator >= 2.0f || vRadial > 0.0f || distanceFromRobotEnvelope)
+            {
+                return 0.0f;
+            }
+
+            if (temp_vRobot > vRobot) vRobot = temp_vRobot;
+
+        }
+
+        return vRobot;
     }
 
     void RobotControl::humanEntriesCallback(const roi_msgs::HumanEntriesConstPtr& entries_msg)
     {
-        calculatedReach = RobotControl::calculateReach(*entries_msg);
-
-
+        
+        float vRobot = RobotControl::calculateFinalRobotSpeed(*entries_msg);
+        /*
+        // conditions (1) implemented
         for(int i = 0; i < entries_msg->entries.size(); i++)
         {
 
@@ -145,28 +248,25 @@ namespace RobotControlNamespace
                     CURRENT_SPEED = SPEED_SLOW;
                 }
 
-                RobotControl::resetTimer();
             }
         }
-    }
+        */
 
-    void RobotControl::resetTimer()
-    {
-        if(timer.hasStarted())
-            timer.stop();
-        timer.start();
+       if (vRobot != CURRENT_SPEED)
+       {
+           CURRENT_SPEED = vRobot;
+           breakTrajectoryExecution = true;
+       }
+
     }
 
     void RobotControl::loopEverything()
     {
         // sleep(2.0);
-        ROS_ERROR("In loop everything!");
+        ROS_ERROR("In: loop everything!");
         
-        // Setting velocity scaling factor and max planning time
-        move_group.setMaxVelocityScalingFactor(CURRENT_SPEED);
+        // Setting velocity max planning time
         move_group.setPlanningTime(10.0);
-        
-        ROS_ERROR("Set planning time finished");
         
         moveit::planning_interface::MoveGroupInterface::Plan my_plan;
         ROS_ERROR("Initialized plan");
@@ -175,7 +275,6 @@ namespace RobotControlNamespace
         {
             // ROS_ERROR("Speeeeeeeeed: %f", CURRENT_SPEED);
             move_group.setMaxVelocityScalingFactor(CURRENT_SPEED);
-            
 
             geometry_msgs::Pose pose_now = *current_target_pose_iterator;
 
@@ -183,7 +282,7 @@ namespace RobotControlNamespace
 
 
             planning_success = (move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
-            // ROS_INFO_NAMED("Plan succession", "Visualizing plan 1 (pose goal) %s", planning_success ? "" : "FAILED");
+            ROS_INFO_NAMED("Plan succession", "Visualizing plan 1 (pose goal) %s", planning_success ? "" : "FAILED");
             assert(planning_success);
 
             move_group.asyncExecute(my_plan);
@@ -195,7 +294,7 @@ namespace RobotControlNamespace
                 {
                     move_group.stop();
                     ROS_ERROR("Stopped exec!");
-                    sleep(1.0);
+                    sleep(0.5);
 
                     break;
                 }
@@ -208,7 +307,7 @@ namespace RobotControlNamespace
 
             } while (pose_diff_x > 0.0005 || pose_diff_y > 0.0005 || pose_diff_z > 0.0005);
             
-            if(!breakTrajectoryExecution)
+            if(!breakTrajectoryExecution) // if robot finished the trajectory without breaking it 
             {
                 ++current_target_pose_iterator;
 

@@ -183,6 +183,21 @@ abb_irb2400_test_custom_node/fast:
 .PHONY : abb_irb2400_test_custom_node/fast
 
 # Convenience name for target.
+abb_irb2400_test/CMakeFiles/RobotControl_node_test.dir/rule:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f CMakeFiles/Makefile2 abb_irb2400_test/CMakeFiles/RobotControl_node_test.dir/rule
+.PHONY : abb_irb2400_test/CMakeFiles/RobotControl_node_test.dir/rule
+
+# Convenience name for target.
+RobotControl_node_test: abb_irb2400_test/CMakeFiles/RobotControl_node_test.dir/rule
+
+.PHONY : RobotControl_node_test
+
+# fast build rule for target.
+RobotControl_node_test/fast:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f abb_irb2400_test/CMakeFiles/RobotControl_node_test.dir/build.make abb_irb2400_test/CMakeFiles/RobotControl_node_test.dir/build
+.PHONY : RobotControl_node_test/fast
+
+# Convenience name for target.
 abb_irb2400_test/CMakeFiles/RobotControl_node.dir/rule:
 	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f CMakeFiles/Makefile2 abb_irb2400_test/CMakeFiles/RobotControl_node.dir/rule
 .PHONY : abb_irb2400_test/CMakeFiles/RobotControl_node.dir/rule
@@ -1931,6 +1946,33 @@ src/robotcontrol_node.cpp.s:
 	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f abb_irb2400_test/CMakeFiles/RobotControl_node.dir/build.make abb_irb2400_test/CMakeFiles/RobotControl_node.dir/src/robotcontrol_node.cpp.s
 .PHONY : src/robotcontrol_node.cpp.s
 
+src/robotcontrol_node_test.o: src/robotcontrol_node_test.cpp.o
+
+.PHONY : src/robotcontrol_node_test.o
+
+# target to build an object file
+src/robotcontrol_node_test.cpp.o:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f abb_irb2400_test/CMakeFiles/RobotControl_node_test.dir/build.make abb_irb2400_test/CMakeFiles/RobotControl_node_test.dir/src/robotcontrol_node_test.cpp.o
+.PHONY : src/robotcontrol_node_test.cpp.o
+
+src/robotcontrol_node_test.i: src/robotcontrol_node_test.cpp.i
+
+.PHONY : src/robotcontrol_node_test.i
+
+# target to preprocess a source file
+src/robotcontrol_node_test.cpp.i:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f abb_irb2400_test/CMakeFiles/RobotControl_node_test.dir/build.make abb_irb2400_test/CMakeFiles/RobotControl_node_test.dir/src/robotcontrol_node_test.cpp.i
+.PHONY : src/robotcontrol_node_test.cpp.i
+
+src/robotcontrol_node_test.s: src/robotcontrol_node_test.cpp.s
+
+.PHONY : src/robotcontrol_node_test.s
+
+# target to generate assembly for a file
+src/robotcontrol_node_test.cpp.s:
+	cd /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build && $(MAKE) -f abb_irb2400_test/CMakeFiles/RobotControl_node_test.dir/build.make abb_irb2400_test/CMakeFiles/RobotControl_node_test.dir/src/robotcontrol_node_test.cpp.s
+.PHONY : src/robotcontrol_node_test.cpp.s
+
 src/test_custom.o: src/test_custom.cpp.o
 
 .PHONY : src/test_custom.o
@@ -1996,6 +2038,7 @@ help:
 	@echo "... install"
 	@echo "... list_install_components"
 	@echo "... abb_irb2400_test_custom_node"
+	@echo "... RobotControl_node_test"
 	@echo "... RobotControl_node"
 	@echo "... test"
 	@echo "... abb_irb2400_test_genpy"
@@ -2118,6 +2161,9 @@ help:
 	@echo "... src/robotcontrol_node.o"
 	@echo "... src/robotcontrol_node.i"
 	@echo "... src/robotcontrol_node.s"
+	@echo "... src/robotcontrol_node_test.o"
+	@echo "... src/robotcontrol_node_test.i"
+	@echo "... src/robotcontrol_node_test.s"
 	@echo "... src/test_custom.o"
 	@echo "... src/test_custom.i"
 	@echo "... src/test_custom.s"

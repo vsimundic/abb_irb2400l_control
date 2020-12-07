@@ -61,6 +61,8 @@ moveit_msgs/CollisionObject.h
 -
 moveit_visual_tools/moveit_visual_tools.h
 -
+opencv2/opencv.hpp
+/home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/src/abb_irb2400_test/include/abb_irb2400_test/opencv2/opencv.hpp
 message_filters/subscriber.h
 -
 geometry_msgs/Point.h

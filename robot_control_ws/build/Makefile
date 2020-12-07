@@ -298,6 +298,19 @@ abb_irb2400_test_custom_node/fast:
 .PHONY : abb_irb2400_test_custom_node/fast
 
 #=============================================================================
+# Target rules for targets named RobotControl_node_test
+
+# Build rule for target.
+RobotControl_node_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 RobotControl_node_test
+.PHONY : RobotControl_node_test
+
+# fast build rule for target.
+RobotControl_node_test/fast:
+	$(MAKE) -f abb_irb2400_test/CMakeFiles/RobotControl_node_test.dir/build.make abb_irb2400_test/CMakeFiles/RobotControl_node_test.dir/build
+.PHONY : RobotControl_node_test/fast
+
+#=============================================================================
 # Target rules for targets named RobotControl_node
 
 # Build rule for target.
@@ -1789,6 +1802,7 @@ help:
 	@echo "... gtest_main"
 	@echo "... gtest"
 	@echo "... abb_irb2400_test_custom_node"
+	@echo "... RobotControl_node_test"
 	@echo "... RobotControl_node"
 	@echo "... abb_irb2400_test_genpy"
 	@echo "... abb_irb2400_test_gennodejs"

@@ -12,6 +12,9 @@
 #include <moveit_msgs/CollisionObject.h>
 #include <moveit_visual_tools/moveit_visual_tools.h>
 
+// // OpenCV
+#include "opencv2/opencv.hpp"
+
 #include <message_filters/subscriber.h>
 #include <geometry_msgs/Point.h>
 
@@ -37,7 +40,7 @@ namespace RobotControlNamespace
             ~RobotControl();
 
             /**
-             * Initialize the publishers, subscribers, timers
+             * Initialize the publishers, subscribers
              * and parameters for the MoveGroupInterface
              */
             void init();
@@ -48,16 +51,6 @@ namespace RobotControlNamespace
              */
             void humanEntriesCallback(const roi_msgs::HumanEntriesConstPtr& entries_msg);
             
-            /**
-             * Timer callback (after 3 sec)
-             * @param event
-             */
-            void timerCallback(const ros::TimerEvent& event);
-
-            /**
-             * Resetting the timer (stop - start)
-             */
-            void resetTimer();
 
             /**
              * Loops while ROS is running and controls smth
@@ -70,9 +63,6 @@ namespace RobotControlNamespace
 
             // Private ROS node handle
             ros::NodeHandle pnh_;
-            
-            // Timer after 3 sec
-            ros::Timer timer;
 
             // Subscribers and publishers
             ros::Subscriber entry_distance_sub;
@@ -127,11 +117,27 @@ namespace RobotControlNamespace
             // the value tempCalculatedReach outside of the function
             double calculatedReach;
 
-            double humanVelocity;
+            float operatorSpeed;
 
 
+            // transformation matrices
+            cv::Mat TCR;
+            cv::Mat TRC;
 
-            double calculateReach(roi_msgs::HumanEntries entries);
+            cv::Mat robotPosition;
+
+            void loadMatrices();
+
+
+            // Implementing conditions (1)
+            float calculateReach(roi_msgs::HumanEntries entries);
+            float calculateOperatorSpeed(roi_msgs::HumanEntry operatorEntry);
+            float calculateRadialOperatorSpeed(roi_msgs::HumanEntry operatorEntry);
+            float calculateTangentialOperatorSpeed(float vOperator, float vRadial);
+
+
+            // Implementing conditions (2)
+            float calculateFinalRobotSpeed(roi_msgs::HumanEntries operatorEntries);
 
     }; // class RobotControl
 

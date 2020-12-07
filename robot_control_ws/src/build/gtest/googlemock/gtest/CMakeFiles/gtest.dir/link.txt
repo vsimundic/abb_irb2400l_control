@@ -1,1 +1,0 @@
-/usr/bin/g++-7 -fPIC -g  -shared -Wl,-soname,libgtest.so -o libgtest.so CMakeFiles/gtest.dir/src/gtest-all.cc.o  -L/home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/src/build/gtest/googlemock/gtest/src -Wl,-rpath,/home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/src/build/gtest/googlemock/gtest/src -lpthread 

@@ -25,6 +25,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/usr/include/OGRE"
   "/home/valentin/FAKS/HDR/human_tracker/devel/include"
   "/home/valentin/FAKS/HDR/human_tracker/src/roi_msgs/include"
+  "/usr/include/opencv"
   )
 
 # Targets to which this target links.

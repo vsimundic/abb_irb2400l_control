@@ -14,6 +14,7 @@
 
 // // OpenCV
 #include "opencv2/opencv.hpp"
+#include <opencv2/core/cvdef.h> // for CV_PI
 
 #include <message_filters/subscriber.h>
 #include <geometry_msgs/Point.h>
@@ -131,9 +132,22 @@ namespace RobotControlNamespace
 
             // Implementing conditions (1)
             float calculateReach(roi_msgs::HumanEntries entries);
-            float calculateOperatorSpeed(roi_msgs::HumanEntry operatorEntry);
-            float calculateRadialOperatorSpeed(roi_msgs::HumanEntry operatorEntry);
+            float calculateOperatorSpeed(cv::Mat vOperator);
+            float calculateRadialOperatorSpeed(cv::Mat vOperator, cv::Mat positionOperator);
             float calculateTangentialOperatorSpeed(float vOperator, float vRadial);
+            float calculateRadialAngle(cv::Mat vOperator, cv::Mat vRadial);
+
+            // speeeeeeeeeeed stuff
+            float reach;
+            float vTangentialRef = 0.1f;
+            float vOperator;
+            float vRadial;
+            float vTangential;
+            float distanceFromRobotEnvelope;
+            
+            float vRobot;
+            float temp_vRobot;
+            float radialAngle;
 
 
             // Implementing conditions (2)

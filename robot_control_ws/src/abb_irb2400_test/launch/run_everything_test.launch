@@ -16,7 +16,8 @@
         <arg name="time" value="1" />
         <arg name="pkg" value="abb_irb2400_moveit_config" />
         <arg name="file" value="moveit_planning_execution.launch" />
-        <arg name="value" value="sim:=false robot_ip:=$(arg robot_ipp)" />
+        <!-- <arg name="value" value="sim:=false robot_ip:=$(arg robot_ipp)" /> -->
+        <arg name="value" value="sim:=true" />
         <arg name="node_name" value="timed_roslaunch_moveitconfig" />
     </include>
 

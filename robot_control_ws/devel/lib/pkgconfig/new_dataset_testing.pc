@@ -1,0 +1,8 @@
+prefix=/home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/devel
+
+Name: new_dataset_testing
+Description: Description of new_dataset_testing
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

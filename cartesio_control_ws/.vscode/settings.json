@@ -1,0 +1,8 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/valentin/FAKS/HDR/openni_kinect/devel/lib/python2.7/dist-packages",
+        "/opt/ros/melodic/lib/python2.7/dist-packages",
+        "/opt/xbot/lib/python2.7/dist-packages"
+    ],
+    "cmake.configureOnOpen": false
+}

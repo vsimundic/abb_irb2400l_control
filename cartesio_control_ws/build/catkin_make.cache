@@ -1,0 +1,2 @@
+cartesio_irb2400
+-DCATKIN_DEVEL_PREFIX=/home/valentin/FAKS/HDR/robot_workspaces/cartesio_control_ws/devel -DCMAKE_INSTALL_PREFIX=/home/valentin/FAKS/HDR/robot_workspaces/cartesio_control_ws/install -G Unix Makefiles

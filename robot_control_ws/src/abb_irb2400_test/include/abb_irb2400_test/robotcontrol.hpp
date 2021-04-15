@@ -18,6 +18,7 @@
 
 #include <message_filters/subscriber.h>
 #include <geometry_msgs/Point.h>
+#include <visualization_msgs/Marker.h>
 
 // Messages comming from the method 2.1 (human detection - 'human_tracker' workspace)
 #include <std_msgs/Float64.h>
@@ -25,6 +26,9 @@
 
 #include "roi_msgs/HumanEntries.h"
 #include "roi_msgs/HumanEntry.h"
+#include "testing_msgs/OperatorSpeed.h"
+#include "testing_msgs/OperatorDistance.h"
+#include "testing_msgs/AngleRotation.h"
 
 #include <ros/console.h>
 
@@ -68,6 +72,10 @@ namespace RobotControlNamespace
             // Subscribers and publishers
             ros::Subscriber entry_distance_sub;
             ros::Publisher display_pub;
+            ros::Publisher radialVel_pub;
+            ros::Publisher operatorSpeed_pub;
+            ros::Publisher angleRotation_pub;
+            ros::Publisher distanceFromEnvelope_pub;
 
             // Fixed points
             geometry_msgs::Point robotFixedPoint;
@@ -118,7 +126,7 @@ namespace RobotControlNamespace
             // the value tempCalculatedReach outside of the function
             double calculatedReach;
 
-            float operatorSpeed;
+            double operatorSpeed;
 
 
             // transformation matrices
@@ -131,27 +139,28 @@ namespace RobotControlNamespace
 
 
             // Implementing conditions (1)
-            float calculateReach(roi_msgs::HumanEntries entries);
-            float calculateOperatorSpeed(cv::Mat vOperator);
-            float calculateRadialOperatorSpeed(cv::Mat vOperator, cv::Mat positionOperator);
-            float calculateTangentialOperatorSpeed(float vOperator, float vRadial);
-            float calculateRadialAngle(cv::Mat vOperator, cv::Mat vRadial);
+            double calculateReach(roi_msgs::HumanEntries entries);
+            double calculateOperatorSpeed(cv::Mat vOperator);
+            double calculateRadialOperatorSpeed(cv::Mat vOperator, cv::Mat positionOperator);
+            double calculateTangentialOperatorSpeed(double vOperator, double vRadial);
+            double calculateRadialAngle(cv::Mat vOperator, cv::Mat vRadial);
+            double calculateEuclideanDistance(cv::Mat position1, cv::Mat position2);
 
             // speeeeeeeeeeed stuff
-            float reach;
-            float vTangentialRef = 0.1f;
-            float vOperator;
-            float vRadial;
-            float vTangential;
-            float distanceFromRobotEnvelope;
+            double reach;
+            double vTangentialRef = 0.1f;
+            double vOperator;
+            double vRadial;
+            double vTangential;
+            double distanceFromRobotEnvelope;
             
-            float vRobot;
-            float temp_vRobot;
-            float radialAngle;
+            double vRobot;
+            double temp_vRobot;
+            double radialAngle;
 
 
             // Implementing conditions (2)
-            float calculateFinalRobotSpeed(roi_msgs::HumanEntries operatorEntries);
+            double calculateFinalRobotSpeed(roi_msgs::HumanEntries operatorEntries);
 
     }; // class RobotControl
 

@@ -19,6 +19,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   roi_msgs
   cv_bridge
+  testing_msgs
 )
 
 find_package(OpenCV 3 REQUIRED)

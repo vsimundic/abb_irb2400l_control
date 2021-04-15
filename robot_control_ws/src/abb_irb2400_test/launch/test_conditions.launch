@@ -1,0 +1,38 @@
+<launch>
+
+    <!-- camera_rgb_optical_frame for visualization -->
+    <node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" args="0 0 0 -0.5 0.5 -0.5 0.5 camera_rgb_frame camera_rgb_optical_frame 30" />
+
+    <!-- <include file="$(find timed_roslaunch)/timed_roslaunch.launch">
+        <arg name="time" value="5" />
+        <arg name="pkg" value="openni_launch" />
+        <arg name="file" value="openni.launch" />
+        <arg name="node_name" value="timed_roslaunch_openni" />
+    </include> -->
+
+    <!-- Run MoveIt! - robot simulation interface -->
+    <include file="$(find timed_roslaunch)/timed_roslaunch.launch">
+        <arg name="time" value="1" />
+        <arg name="pkg" value="abb_irb2400_moveit_config" />
+        <arg name="file" value="moveit_planning_execution.launch" />
+        <arg name="value" value="sim:=true" />
+        <arg name="node_name" value="timed_roslaunch_moveit_config" />
+    </include>
+
+    <!-- Run human detection method -->
+    <include file="$(find timed_roslaunch)/timed_roslaunch.launch">
+        <arg name="time" value="15" />
+        <arg name="pkg" value="System_Launch" />
+        <arg name="file" value="run_kinect_node.launch" />
+        <arg name="node_name" value="timed_roslaunch_human_tracker" />
+    </include>
+    
+    <!-- Run robot trajectory -->
+    <include file="$(find timed_roslaunch)/timed_roslaunch.launch">
+        <arg name="time" value="25" />
+        <arg name="pkg" value="abb_irb2400_test" />
+        <arg name="file" value="run_RobotControl_node.launch" />
+        <arg name="node_name" value="timed_roslaunch_robot_control" />
+    </include>
+
+</launch>

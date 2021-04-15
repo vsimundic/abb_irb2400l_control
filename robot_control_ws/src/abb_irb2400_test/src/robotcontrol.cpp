@@ -26,14 +26,17 @@ namespace RobotControlNamespace
     {
         ROS_ERROR("In init!");
         // Define the fixed point of the robot relative to the camera
-        robotFixedPoint.x = 2.0;
-        robotFixedPoint.y = -2.0;
-        robotFixedPoint.z = -0.15;
+        robotFixedPoint.x = 1.25;
+        robotFixedPoint.y = -3.05;
+        robotFixedPoint.z = -0.27;
 
         // Defining subscribers and publishers
         entry_distance_sub = pnh_.subscribe("/human_tracker_data", 10, &RobotControl::humanEntriesCallback, this);
         display_pub = pnh_.advertise<moveit_msgs::DisplayTrajectory>("/move_group/display_planned_path", 1, true);
-
+        // radialVel_pub = pnh_.advertise<visualization_msgs::Marker>("/radialVelocity", 5, true);
+        operatorSpeed_pub = pnh_.advertise<testing_msgs::OperatorSpeed>("/dataset_testing/operator_speed", 10, true);
+        angleRotation_pub = pnh_.advertise<testing_msgs::AngleRotation>("/dataset_testing/angle_rotation", 10, true);
+        distanceFromEnvelope_pub = pnh_.advertise<testing_msgs::OperatorDistance>("/dataset_testing/distance_from_envelope", 10, true);
 
         joint_model_group = move_group.getCurrentState()->getJointModelGroup("manipulator");
         ROS_ERROR("Got joint model group.");
@@ -64,14 +67,18 @@ namespace RobotControlNamespace
 
         ROS_ERROR("Before loading matrices");
         // // Load transformation matrices
-        TRC = cv::Mat(4, 4, CV_32F);
-        TCR = cv::Mat(4, 4, CV_32F);
+        TRC = cv::Mat(4, 4, CV_64F);
+        TCR = cv::Mat(4, 4, CV_64F);
 
         RobotControl::loadMatrices();
 
-        robotPosition = cv::Mat(1, 2, CV_32F);
-        robotPosition.at<float>(0,0) = TRC.at<float>(0, 3);
-        robotPosition.at<float>(0,1) = TRC.at<float>(1, 3);
+        robotPosition = cv::Mat(1, 2, CV_64F);
+        // robotPosition.at<double>(0,0) = TRC.at<double>(0, 3);
+        // robotPosition.at<double>(0,1) = TRC.at<double>(1, 3);
+
+        robotPosition.at<double>(0,0) = -2.22f;
+        robotPosition.at<double>(0,1) = 4.06f;
+
 
         ROS_ERROR("After loading matrices");
 
@@ -98,7 +105,7 @@ namespace RobotControlNamespace
         {
             for (int j = 0; j < 4; j++)
             {
-                matrix_file >> TRC.at<float>(i, j);
+                matrix_file >> TRC.at<double>(i, j);
             }
         }
 
@@ -109,7 +116,7 @@ namespace RobotControlNamespace
         {
             for (int j = 0; j < 4; j++)
             {
-                matrix_file >> TCR.at<float>(i, j);
+                matrix_file >> TCR.at<double>(i, j);
             }
         }
 
@@ -118,55 +125,66 @@ namespace RobotControlNamespace
     }
 
 
-    float RobotControl::calculateRadialOperatorSpeed(cv::Mat vOperator, cv::Mat positionOperator)
+    double RobotControl::calculateRadialOperatorSpeed(cv::Mat vOperator, cv::Mat positionOperator)
     {        
         // Assuming that the velocity of the base of the robot is 0
         /**
          * all variables listed below are vectors except vR (which is a single number)
          * ##########################################################
          * ### vR = (vOperator - vRobot) * (pOperator - pRobot)   ###
-         * ### -------------------------------------------------- ###
+         * ###      --------------------------------------------  ###
          * ###                 |pOperator - pRobot|               ###
          * ##########################################################
          */
         // norm (with type NORM_L2) calculates the eucliedan distance between two points
         // ROS_WARN("Dot prod: %f", vOperator.dot(positionOperator - robotPosition));
         // ROS_WARN("eucl dist: %f", cv::norm(positionOperator, robotPosition, cv::NORM_L2));
-        return vOperator.dot(positionOperator - robotPosition) / cv::norm(positionOperator, robotPosition, cv::NORM_L2);
+        return vOperator.dot(robotPosition - positionOperator) / RobotControl::calculateEuclideanDistance(robotPosition, positionOperator);
     }
 
-    float RobotControl::calculateRadialAngle(cv::Mat vOperator, cv::Mat vRadial)
+    double RobotControl::calculateRadialAngle(cv::Mat vOperator, cv::Mat vRadial)
     {
-        return abs(vOperator.dot(vRadial)/cv::norm(vOperator, vRadial, cv::NORM_L2)) * 180.0f/CV_PI;
+        // ROS_ERROR("[DEBUG] In acos: %f", vRadial.dot(vOperator) / RobotControl::calculateEuclideanDistance(vRadial, vOperator));
+        // ROS_ERROR("[DEBUG] In acos2: %f", vOperator.dot(vRadial) / RobotControl::calculateEuclideanDistance(vOperator, vRadial));
+        double magnitudeOfVectors = sqrt( (pow(vOperator.at<double>(0,0), 2) + pow(vOperator.at<double>(0,1), 2) ) * ( pow(vRadial.at<double>(0,0), 2) + pow(vRadial.at<double>(0,1), 2) ) );
+        return acos(vOperator.dot(vRadial) / magnitudeOfVectors) * (180.0f/CV_PI);
     }
 
-    float RobotControl::calculateTangentialOperatorSpeed(float vOperator, float vRadial)
+    double RobotControl::calculateTangentialOperatorSpeed(double vOperator, double vRadial)
     {
         return vOperator*vOperator - vRadial*vRadial;
     }
 
-    float RobotControl::calculateOperatorSpeed(cv::Mat vOperator)
+    double RobotControl::calculateOperatorSpeed(cv::Mat vOperator)
     {
-        return sqrt(vOperator.at<float>(0,0)*vOperator.at<float>(0,0) + vOperator.at<float>(0,1)*vOperator.at<float>(0,1));
+        return sqrt(vOperator.at<double>(0,0)*vOperator.at<double>(0,0) + vOperator.at<double>(0,1)*vOperator.at<double>(0,1));
     }
+
+    double RobotControl::calculateEuclideanDistance(cv::Mat position1, cv::Mat position2)
+    {
+        return sqrt( pow(position1.at<double>(0,0) - position2.at<double>(0,0), 2) + pow(position1.at<double>(0,1) - position2.at<double>(0,1), 2));
+    }
+
 
     /**
      * 
      * Conditions (1)
      */
-    float RobotControl::calculateReach(roi_msgs::HumanEntries entries)
+    double RobotControl::calculateReach(roi_msgs::HumanEntries entries)
     {
-        float calculatedReach = BASE_REACH;
-        float referenceReach = BASE_REACH;
+        double calculatedReach = BASE_REACH;
+        double referenceReach = BASE_REACH;
 
-        cv::Mat vOperatorMat = cv::Mat::zeros(1, 2, CV_32F);
+        cv::Mat vOperatorMat = cv::Mat::zeros(1, 2, CV_64F);
 
         for(int i = 0; i < entries.entries.size(); i++)
         {
-            vOperatorMat.at<float>(0,0) = entries.entries[i].Xvelocity;
-            vOperatorMat.at<float>(0,1) = entries.entries[i].Yvelocity;
+            vOperatorMat.at<double>(0,0) = entries.entries[i].Xvelocity;
+            vOperatorMat.at<double>(0,1) = entries.entries[i].Zvelocity;
 
             operatorSpeed = calculateOperatorSpeed(vOperatorMat);
+
+            // ROS_ERROR("[DEBUG] Operator speed = %f", operatorSpeed);
 
             if(operatorSpeed < 0.1f)
                 calculatedReach = BASE_REACH;
@@ -189,64 +207,126 @@ namespace RobotControlNamespace
      * 
      * Conditions (2)
      */
-    float RobotControl::calculateFinalRobotSpeed(roi_msgs::HumanEntries entries)
+    double RobotControl::calculateFinalRobotSpeed(roi_msgs::HumanEntries entries)
     {
         vRobot = 0.5f; // max velocity
         reach = RobotControl::calculateReach(entries);
         
-        cv::Mat vOperatorMat = cv::Mat::zeros(1, 2, CV_32F);
-        cv::Mat positionOperatorMat = cv::Mat::zeros(1, 2, CV_32F);
-        cv::Mat vRadialMat = cv::Mat::zeros(1, 2, CV_32F);
+        cv::Mat vOperatorMat = cv::Mat::zeros(1, 2, CV_64F);
+        cv::Mat positionOperatorMat = cv::Mat::zeros(1, 2, CV_64F);
+        cv::Mat vRadialMat = cv::Mat::zeros(1, 2, CV_64F);
 
         for(int i = 0; i < entries.entries.size(); i++)
         {
-            vOperatorMat.at<float>(0,0) = entries.entries[i].Xvelocity;
-            vOperatorMat.at<float>(0,1) = entries.entries[i].Yvelocity;
-            positionOperatorMat.at<float>(0, 0) = entries.entries[i].personCentroidX;
-            positionOperatorMat.at<float>(0, 1) = entries.entries[i].personCentroidY;
+            vOperatorMat.at<double>(0,0) = entries.entries[i].Xvelocity;
+            vOperatorMat.at<double>(0,1) = entries.entries[i].Zvelocity;
+            positionOperatorMat.at<double>(0, 0) = entries.entries[i].personCentroidX;
+            positionOperatorMat.at<double>(0, 1) = entries.entries[i].personCentroidZ;
 
-            distanceFromRobotEnvelope = cv::norm(positionOperatorMat, robotPosition, cv::NORM_L2) - reach;
+            distanceFromRobotEnvelope = RobotControl::calculateEuclideanDistance(positionOperatorMat, robotPosition) - reach;
 
             vOperator = calculateOperatorSpeed(vOperatorMat);
             vRadial = calculateRadialOperatorSpeed(vOperatorMat, positionOperatorMat);
             vTangential = calculateTangentialOperatorSpeed(vOperator, vRadial);
-            
-            vRadialMat = vRadial * (positionOperatorMat - robotPosition) / cv::norm(positionOperatorMat, robotPosition, cv::NORM_L2);            
+
+            vRadialMat = vRadial * (robotPosition - positionOperatorMat) / RobotControl::calculateEuclideanDistance(positionOperatorMat, robotPosition);            
             radialAngle = calculateRadialAngle(vOperatorMat, vRadialMat);
+
+
+            /****Publish radial velocity marker****/
+            /*
+            geometry_msgs::Point startPoint;
+            geometry_msgs::Point endPoint;
+
+            startPoint.x = entries.entries[i].personCentroidX;
+            startPoint.y = entries.entries[i].personCentroidY;
+            startPoint.z = entries.entries[i].personCentroidZ;
+
+            endPoint.x = entries.entries[i].personCentroidX + vRadialMat.at<double>(0, 0);
+            endPoint.y = entries.entries[i].personCentroidY;
+            endPoint.z = entries.entries[i].personCentroidZ + vRadialMat.at<double>(0, 1);
+            
+            // velocity Marker
+            visualization_msgs::Marker velocityMarker;
+            velocityMarker.type = visualization_msgs::Marker::ARROW;
+            velocityMarker.action = visualization_msgs::Marker::ADD;
+            velocityMarker.id = i;
+            velocityMarker.header.frame_id = "/camera_rgb_optical_frame";
+            velocityMarker.header.stamp = ros::Time::now();
+
+            velocityMarker.ns = "radialVel";
+
+            velocityMarker.points.push_back(startPoint);
+            velocityMarker.points.push_back(endPoint);
+
+            velocityMarker.scale.x = 0.1;
+            velocityMarker.scale.y = 0.3;
+
+            velocityMarker.color.a = 0.6;  // Don't forget to set the alpha!
+            velocityMarker.color.r = 0.0;
+            velocityMarker.color.g = 0.0;
+            velocityMarker.color.b = 1.0;
+            
+            velocityMarker.lifetime = ros::Duration(0.25);
+            
+            radialVel_pub.publish(velocityMarker);
+            */
+            /********/
+
+
+            // ROS_ERROR("[DEBUG] Radial Angle = %f", radialAngle);
 
             vTangentialRef = abs(vTangentialRef - vTangential) > 0.3f ? vTangential : vTangentialRef;
             vTangentialRef = abs(vTangentialRef) < 0.1f ? 0.1f : vTangentialRef;
 
-            // ROS_WARN("Vo = %f", vOperator);
-            ROS_WARN("Vr = %f", vRadial);
-            // ROS_WARN("Vt = %f", vTangential);
 
-            if (vOperator >= 2.0f) 
-                return 0.0f;    
-            
-            else if(distanceFromRobotEnvelope > 0.15f && distanceFromRobotEnvelope <= 0.3f)
-            {
-                if (radialAngle < 45.0f) 
-                    return 0.0f;
-            }
-            else if (distanceFromRobotEnvelope <= 0.15f)
-            {
-                if (vRadial > 0.0f) 
-                    return 0.0f;
-            }
+            /* CONDITIONS (2) */
             temp_vRobot = 0.5f;
 
-            if (vOperator >= 0.1f && vOperator < 2.0f) {
-
+            if (vOperator >= 0.1f && vOperator < 2.0f) 
+            {
                 temp_vRobot = 0.5f/(10.0f*vTangentialRef);
             }
-            if (vOperator < 0.1f) 
+            else if (vOperator < 0.1f)
+            { 
                 temp_vRobot = 0.5f;
-
-
+            }
+            
+            if (vOperator >= 2.0f || distanceFromRobotEnvelope < 0.0f){
+                temp_vRobot = 0.0f; 
+            }
+            
+            if((distanceFromRobotEnvelope > 0.15f && distanceFromRobotEnvelope <= 0.3f) && radialAngle < 45.0f)
+            {
+                temp_vRobot = 0.0f;
+            }
+            else if (distanceFromRobotEnvelope <= 0.15f && vRadial > 0.0f)
+            {
+                temp_vRobot = 0.0f;
+            }
+            
             if (temp_vRobot < vRobot) vRobot = temp_vRobot;
+            
+            /*****************/
+            // Publish stuff for dataset testing 
+            testing_msgs::OperatorSpeed opSpeed_msg; // publish operator speed
+            opSpeed_msg.header.stamp = entries.header.stamp;
+            opSpeed_msg.humanSpeed = vOperator;
+            opSpeed_msg.robotVelocity = vRobot;
+            operatorSpeed_pub.publish(opSpeed_msg);
+            
+            testing_msgs::OperatorDistance opDistance_msg; // publish operator distance from envelope
+            opDistance_msg.header.stamp = entries.header.stamp;
+            opDistance_msg.distanceFromEnvelope = distanceFromRobotEnvelope;
+            opDistance_msg.robotVelocity = vRobot;
+            distanceFromEnvelope_pub.publish(opDistance_msg);
 
         }
+        
+        testing_msgs::AngleRotation angleRotation_msg; // publish operator angle in relation to the robot
+        angleRotation_msg.header.stamp = entries.header.stamp;
+        angleRotation_msg.robotVelocity = vRobot;
+        angleRotation_pub.publish(angleRotation_msg);
 
         return vRobot;
     }
@@ -254,49 +334,17 @@ namespace RobotControlNamespace
     void RobotControl::humanEntriesCallback(const roi_msgs::HumanEntriesConstPtr& entries_msg)
     {
         
-        float vRobot = RobotControl::calculateFinalRobotSpeed(*entries_msg);
-        /*
-        // conditions (1) implemented
-        for(int i = 0; i < entries_msg->entries.size(); i++)
+        double vRobot = RobotControl::calculateFinalRobotSpeed(*entries_msg);
+
+        if (vRobot != CURRENT_SPEED)
         {
-
-            entryPoint.x = entries_msg->entries[i].personCentroidY;
-            entryPoint.y = -entries_msg->entries[i].personCentroidX;
-            entryPoint.z = -entries_msg->entries[i].personCentroidZ;
-
-            entryDistance = sqrt(pow(robotFixedPoint.x - entryPoint.x, 2) + pow(robotFixedPoint.y - entryPoint.y, 2));
-
-            if(entryDistance < calculatedReach)
-            {
-                ROS_ERROR("Distance: %.2f", entryDistance);
-                ROS_ERROR("Human velocity: %.2f", humanVelocity);
-                ROS_ERROR("REACH: %f", calculatedReach);
-                ROS_WARN("\n########################################################\n");
-
-
-                if(CURRENT_SPEED == SPEED_FAST)
-                {
-                    breakTrajectoryExecution = true;
-                    CURRENT_SPEED = SPEED_SLOW;
-                }
-
-            }
+            CURRENT_SPEED = vRobot;
+            breakTrajectoryExecution = true;
         }
-        */
-
-       if (vRobot != CURRENT_SPEED)
-       {
-           CURRENT_SPEED = vRobot;
-           breakTrajectoryExecution = true;
-       }
-
     }
 
     void RobotControl::loopEverything()
     {
-        // sleep(2.0);
-        ROS_ERROR("In: loop everything!");
-        
         // Setting velocity max planning time
         move_group.setPlanningTime(10.0);
         

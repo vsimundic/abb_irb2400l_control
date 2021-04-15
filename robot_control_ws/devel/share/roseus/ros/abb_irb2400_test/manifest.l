@@ -23,6 +23,7 @@
 (ros::load-ros-package "shape_msgs")
 (ros::load-ros-package "std_msgs")
 (ros::load-ros-package "std_srvs")
+(ros::load-ros-package "testing_msgs")
 (ros::load-ros-package "tf")
 (ros::load-ros-package "tf2_msgs")
 (ros::load-ros-package "topic_tools")

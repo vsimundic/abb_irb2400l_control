@@ -1,0 +1,3 @@
+<launch>
+    <node pkg="abb_irb2400_test" type="RobotControl_node" name="RobotControl_node" />
+</launch>

@@ -1,0 +1,52 @@
+<launch>
+
+    <arg name="prefix" default=""/>
+    <arg name="gui" default="true"/>
+    <arg name="is_model_floating_base" default="false"/>
+    <arg name="sim" default="false"/>
+    <arg name="robot_ip" default="172.16.106.185"/>
+    
+    <param name="robot_description" 
+        textfile="$(find cartesio_irb2400)/urdf/abb_irb2400.urdf"/>
+    
+    <param name="robot_description_semantic" textfile="$(find cartesio_irb2400)/srdf/abb_irb2400.srdf"/>
+    
+    <param name="cartesian/problem_description" textfile="$(find cartesio_irb2400)/configs/irb2400_stack.yaml"/>
+
+    <!-- run the robot simulator and action interface nodes -->
+    <group if="$(arg sim)">
+        <include file="$(find industrial_robot_simulator)/launch/robot_interface_simulator.launch" />
+    </group>
+
+    <!-- run the "real robot" interface nodes -->
+    <!--   - this typically includes: robot_state, motion_interface, and joint_trajectory_action nodes -->
+    <!--   - replace these calls with appropriate robot-specific calls or launch files -->
+    <group unless="$(arg sim)">
+        <include file="$(find abb_irb2400_support)/launch/robot_interface_download_irb2400.launch" >
+        <arg name="robot_ip" value="$(arg robot_ip)"/>
+        </include>
+    </group>
+    
+    <include file="$(find cartesian_interface)/launch/cartesio.launch">
+        <!-- Control frequency (Hz) -->
+        <arg name="rate" value="100.0"/>
+
+        <arg name="prefix" value="$(arg prefix)"/>
+        
+        <!-- False if the base is fixed -->
+        <arg name="is_model_floating_base" value="$(arg is_model_floating_base)" />
+
+        <arg name="xbot" value="true" />
+        <arg name="use_xbot_config" value="true" />
+    </include>
+
+
+
+    <node if="$(arg gui)"
+            type="rviz"
+            name="rviz"
+            pkg="rviz"
+            args="-d $(find cartesio_irb2400)/rviz/disp.rviz"
+            output="screen"/>
+
+</launch>

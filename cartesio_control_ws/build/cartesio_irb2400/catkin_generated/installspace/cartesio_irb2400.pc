@@ -1,0 +1,8 @@
+prefix=/home/valentin/FAKS/HDR/robot_workspaces/cartesio_control_ws/install
+
+Name: cartesio_irb2400
+Description: Description of cartesio_irb2400
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

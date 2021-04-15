@@ -1,0 +1,19 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/valentin/FAKS/HDR/openni_kinect/devel/include/**",
+        "/opt/ros/melodic/include/**",
+        "/opt/xbot/include/**",
+        "/home/valentin/FAKS/HDR/robot_workspaces/catkin_abb_ws/src/abb_driver/include/**",
+        "/home/valentin/FAKS/HDR/openni_kinect/src/openni_camera/openni_camera/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ]
+}

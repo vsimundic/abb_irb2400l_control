@@ -80,7 +80,7 @@
   <exec_depend>roi_msgs</exec_depend>
   <exec_depend>cmake_modules</exec_depend>
 
-
+  <depend>testing_msgs</depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

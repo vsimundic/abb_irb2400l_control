@@ -1,0 +1,8 @@
+prefix=/home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/install
+
+Name: testing_msgs
+Description: Description of testing_msgs
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: roscpp rospy std_msgs

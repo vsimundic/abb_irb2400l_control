@@ -32,8 +32,8 @@
         <!-- <include file="$(find openni_launch)/launch/openni.launch">
             <arg name="depth_registration" value="true"/>
         </include> -->
-
-        <!-- <include file="$(find timed_roslaunch)/timed_roslaunch.launch">
+<!-- 
+        <include file="$(find timed_roslaunch)/timed_roslaunch.launch">
             <arg name="time"        value="10" />
             <arg name="pkg"         value="abb2400_sim" />
             <arg name="file"        value="run_camera_calib_kinect.launch" />

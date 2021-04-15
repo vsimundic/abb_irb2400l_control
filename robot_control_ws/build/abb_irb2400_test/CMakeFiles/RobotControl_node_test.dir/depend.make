@@ -3,6 +3,9 @@
 
 abb_irb2400_test/CMakeFiles/RobotControl_node_test.dir/src/robotcontrol_node_test.cpp.o: /home/valentin/FAKS/HDR/human_tracker/devel/include/roi_msgs/HumanEntries.h
 abb_irb2400_test/CMakeFiles/RobotControl_node_test.dir/src/robotcontrol_node_test.cpp.o: /home/valentin/FAKS/HDR/human_tracker/devel/include/roi_msgs/HumanEntry.h
+abb_irb2400_test/CMakeFiles/RobotControl_node_test.dir/src/robotcontrol_node_test.cpp.o: /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/devel/include/testing_msgs/AngleRotation.h
+abb_irb2400_test/CMakeFiles/RobotControl_node_test.dir/src/robotcontrol_node_test.cpp.o: /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/devel/include/testing_msgs/OperatorDistance.h
+abb_irb2400_test/CMakeFiles/RobotControl_node_test.dir/src/robotcontrol_node_test.cpp.o: /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/devel/include/testing_msgs/OperatorSpeed.h
 abb_irb2400_test/CMakeFiles/RobotControl_node_test.dir/src/robotcontrol_node_test.cpp.o: /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/src/abb_irb2400_test/include/abb_irb2400_test/robotcontrol.hpp
 abb_irb2400_test/CMakeFiles/RobotControl_node_test.dir/src/robotcontrol_node_test.cpp.o: /home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/src/abb_irb2400_test/src/robotcontrol_node_test.cpp
 abb_irb2400_test/CMakeFiles/RobotControl_node_test.dir/src/robotcontrol_node_test.cpp.o: /opt/ros/melodic/include/actionlib/action_definition.h

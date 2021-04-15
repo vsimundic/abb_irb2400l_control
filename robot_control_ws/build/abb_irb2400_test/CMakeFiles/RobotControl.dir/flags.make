@@ -6,5 +6,5 @@ CXX_FLAGS = -g -fPIC
 
 CXX_DEFINES = -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\"abb_irb2400_test\" -DRobotControl_EXPORTS
 
-CXX_INCLUDES = -I/home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/src/abb_irb2400_test/include -I/opt/ros/melodic/include -I/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/opt/ros/melodic/share/orocos_kdl/cmake/../../../include -I/usr/include/eigen3 -I/usr/include/OGRE -I/home/valentin/FAKS/HDR/human_tracker/devel/include -I/home/valentin/FAKS/HDR/human_tracker/src/roi_msgs/include -I/usr/include/opencv 
+CXX_INCLUDES = -I/home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/src/abb_irb2400_test/include -I/home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/devel/include -I/opt/ros/melodic/include -I/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/opt/ros/melodic/share/orocos_kdl/cmake/../../../include -I/usr/include/eigen3 -I/usr/include/OGRE -I/home/valentin/FAKS/HDR/human_tracker/devel/include -I/home/valentin/FAKS/HDR/human_tracker/src/roi_msgs/include -I/usr/include/opencv 
 

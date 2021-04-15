@@ -1,0 +1,1 @@
+roslaunch aruco_detect aruco_detect.launch camera:="/camera/rgb" image:="image_color" fiducial_len:=0.195 dictionary:=11

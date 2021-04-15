@@ -1,0 +1,25 @@
+## stack of tasks definition ##
+
+stack:
+    - ["Arm"]
+    # - ["Arm", "ComTask"]
+constraints: ["JointLimits", "VelocityLimits"]
+
+## task and constraint definition ##
+
+VelocityLimits:
+    type: "VelocityLimits"
+
+JointLimits:
+    type: "JointLimits"
+
+Arm:
+    type: "Cartesian"
+    distal_link: "tool0"
+    base_link: "base"
+
+# ComTask:
+#     type: "Com"
+#     weight: 10
+#     lambda: 0.05
+

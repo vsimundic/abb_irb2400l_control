@@ -5,4 +5,6 @@
 # This file includes the relevant testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.
 subdirs("gtest")
+subdirs("testing_msgs")
+subdirs("new_dataset_testing")
 subdirs("abb_irb2400_test")

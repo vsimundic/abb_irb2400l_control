@@ -1,0 +1,8 @@
+prefix=/home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/devel
+
+Name: irb2400_control
+Description: Description of irb2400_control
+Version: 0.0.0
+Cflags: -I/home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/src/irb2400_control/include
+Libs: -L${prefix}/lib -lRobotControl
+Requires: cmake_modules interactive_markers moveit_core moveit_ros_perception moveit_ros_planning_interface pluginlib roscpp std_msgs roi_msgs

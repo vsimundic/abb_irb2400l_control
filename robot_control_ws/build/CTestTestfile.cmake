@@ -7,4 +7,4 @@
 subdirs("gtest")
 subdirs("testing_msgs")
 subdirs("new_dataset_testing")
-subdirs("abb_irb2400_test")
+subdirs("irb2400_control")

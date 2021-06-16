@@ -24,7 +24,7 @@
             <arg name="time"        value="5" />
             <arg name="pkg"         value="openni_launch" />
             <arg name="file"        value="openni.launch" />
-            <arg name="value"        value="depth_registration:=true" />
+            <arg name="value"       value="depth_registration:=true" />
             <arg name="node_name"   value="timed_roslaunch_openni" />        
         </include>
 

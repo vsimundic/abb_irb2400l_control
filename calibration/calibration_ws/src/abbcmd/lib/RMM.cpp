@@ -91,7 +91,7 @@ RMM::RMM()
 	objectID = 537;
 	speed = 50;
 	
-	MarkerSize = 0.71;
+	MarkerSize = 0.14;
 	ROS_ERROR("MARKER SIZE: %f", MarkerSize);
 	
 	ax = 1.0618;
@@ -240,10 +240,10 @@ void RMM::CalibrateABB()
 
 
 	/* MOJE */
-	qw = 0.645845;
-	qx = -0.332889;
-	qy = 0.577601;
-	qz = 0.372084;
+	qx = -0.362125;
+	qy = 0.599044;
+	qz = 0.434382;
+	qw = 0.566853;
 
 	/* ORIGINALNO */
 	// qw = 0.56864;
@@ -312,35 +312,42 @@ void RMM::CalibrateABB()
 
 		printf("\nPoint %d: x = %.f, y = %.f, z = %.f\n", i, pointsRobot.at<float>(0, i), pointsRobot.at<float>(1, i), pointsRobot.at<float>(2, i));
 
-		MoveToCoord(x, y, z); // izmjena
-
-		counterImage = 0;
-
-		GetPoint(); // izmjena
-		
-		if (MarkFlag == 0)
+		try
 		{
-			FILE *pRobot = fopen(pRobot_filename.c_str(), "a");
+			MoveToCoord(x, y, z); // izmjena
 
-			pointsCamera.at<float>(0, i) = point.at<float>(0, 0) * 1000;
-			pointsCamera.at<float>(1, i) = point.at<float>(1, 0) * 1000;
-			pointsCamera.at<float>(2, i) = point.at<float>(2, 0) * 1000;
+			counterImage = 0;
 
-			//suming columns in mat (centroid)
-			//robot
+			GetPoint(); // izmjena
+			if (MarkFlag == 0)
+			{
+				FILE *pRobot = fopen(pRobot_filename.c_str(), "a");
 
-			robotCentroid.at<float>(0, 0) += pointsRobot.at<float>(0, i);
-			robotCentroid.at<float>(1, 0) += pointsRobot.at<float>(1, i);
-			robotCentroid.at<float>(2, 0) += pointsRobot.at<float>(2, i);
+				pointsCamera.at<float>(0, i) = point.at<float>(0, 0) * 1000;
+				pointsCamera.at<float>(1, i) = point.at<float>(1, 0) * 1000;
+				pointsCamera.at<float>(2, i) = point.at<float>(2, 0) * 1000;
 
-			//camera
-			cameraCentroid.at<float>(0, 0) += pointsCamera.at<float>(0, i);
-			cameraCentroid.at<float>(1, 0) += pointsCamera.at<float>(1, i);
-			cameraCentroid.at<float>(2, 0) += pointsCamera.at<float>(2, i);
-			fprintf(pRobot, "%d\t%d\t%d\n", x, y, z);
-			fprintf(pCam, "%f\t%f\t%f\n", pointsCamera.at<float>(0, i), pointsCamera.at<float>(1, i), pointsCamera.at<float>(2, i));
-			fclose(pRobot);
-			i++;
+				//suming columns in mat (centroid)
+				//robot
+
+				robotCentroid.at<float>(0, 0) += pointsRobot.at<float>(0, i);
+				robotCentroid.at<float>(1, 0) += pointsRobot.at<float>(1, i);
+				robotCentroid.at<float>(2, 0) += pointsRobot.at<float>(2, i);
+
+				//camera
+				cameraCentroid.at<float>(0, 0) += pointsCamera.at<float>(0, i);
+				cameraCentroid.at<float>(1, 0) += pointsCamera.at<float>(1, i);
+				cameraCentroid.at<float>(2, 0) += pointsCamera.at<float>(2, i);
+				fprintf(pRobot, "%d\t%d\t%d\n", x, y, z);
+				fprintf(pCam, "%f\t%f\t%f\n", pointsCamera.at<float>(0, i), pointsCamera.at<float>(1, i), pointsCamera.at<float>(2, i));
+				fclose(pRobot);
+				i++;
+			}
+		}
+		catch (std::exception& e)
+		{
+			ROS_ERROR(e.what());
+			return;
 		}
 			
 	}

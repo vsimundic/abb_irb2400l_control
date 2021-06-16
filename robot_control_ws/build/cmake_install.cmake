@@ -133,7 +133,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build/gtest/cmake_install.cmake")
   include("/home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build/testing_msgs/cmake_install.cmake")
   include("/home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build/new_dataset_testing/cmake_install.cmake")
-  include("/home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build/abb_irb2400_test/cmake_install.cmake")
+  include("/home/valentin/FAKS/HDR/robot_workspaces/robot_control_ws/build/irb2400_control/cmake_install.cmake")
 
 endif()
 

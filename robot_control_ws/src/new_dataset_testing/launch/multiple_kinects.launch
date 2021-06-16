@@ -1,12 +1,12 @@
 <launch>
 
 
-  <!-- FIND KINECT ID IN TERMINAL -->
+  <!-- ***FIND KINECT ID IN TERMINAL*** -->
   <!-- lsusb -v -d 045e:02ae | grep -e "Bus\|iSerial" -->
   
 <!-- Parameters possible to change-->
-    <arg name="camera1_id" default="1@033" /><!-- here you can change 1@0 by the serial number -->
-    <arg name="camera2_id" default="1@036" /><!-- here you can change 2@0 by the serial number -->
+    <arg name="camera1_id" default="1@018" /><!-- here you can change 1@0 by the serial number -->
+    <arg name="camera2_id" default="1@010" /><!-- here you can change 2@0 by the serial number -->
     <!-- <arg name="camera3_id" default="3@0" />here you can change 3@0 by the serial number -->
     <arg name="depth_registration" default="true" />
 
@@ -36,12 +36,5 @@
         <arg name="camera" value="$(arg camera2_name)" />
         <arg name="depth_registration" value="$(arg depth_registration)" />
      </include>
-
-<!-- Launching third kinect-->
-    <!-- <include file="$(find openni_launch)/launch/openni.launch">
-    <arg name="device_id" value="$(arg camera3_id)" />
-    <arg name="camera" value="$(arg camera3_name)" />
-    <arg name="depth_registration" value="$(arg depth_registration)" />
-    </include> -->
 
   </launch>
